@@ -1,0 +1,103 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Vero{% endblock %}</title>
+    {% tailwind_css %}
+    {% block head %}{% endblock %}
+    <script src="https://kit.fontawesome.com/f30307189b.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="antialiased bg-white">
+<!-- ============== NAVBAR ============== -->
+<header class="w-full bg-[#ede5cc] sticky shadow-md top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+
+        <!-- Logo -->
+        <a href="{% url 'index' %}">
+            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1764916494/VeroLogo_prqqv9.svg" 
+                 alt="Vero Logo" class="h-14">
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex space-x-8 text-md font-semibold">
+            <a href="#" class="hover:text-gray-600">Shop</a>
+            <a href="#" class="hover:text-gray-600">About</a>
+            <a href="#" class="hover:text-gray-600">Ingredients</a>
+            <a href="#" class="hover:text-gray-600">Contact</a>
+        </nav>
+
+        <!-- Hamburger button -->
+        <button id="hamburger" class="md:hidden text-2xl focus:outline-none">
+            <i id="hamburger-open" class="fas fa-bars"></i>
+            <i id="hamburger-close" class="fas fa-xmark hidden"></i>
+        </button>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <nav id="mobile-menu" class="md:hidden hidden bg-[#ede5cc] px-6 pb-4 space-y-3 text-lg font-semibold">
+        <a href="#" class="block py-2 border-b border-gray-300">Shop</a>
+        <a href="#" class="block py-2 border-b border-gray-300">About</a>
+        <a href="#" class="block py-2 border-b border-gray-300">Ingredients</a>
+        <a href="#" class="block py-2">Contact</a>
+    </nav>
+</header>
+
+<!-- ============== MAIN CONTENT ============== -->
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- ============== FOOTER ============== -->
+<footer class="bg-gray-100 py-12">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+        <div>
+            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1764916494/VeroLogo_prqqv9.svg" alt="Vero Logo" class="h-12">
+            <p class="text-sm text-gray-600">Tagline</p>
+        </div>
+
+        <div>
+            <p class="font-semibold mb-3">Shop</p>
+            <ul class="space-y-2 text-sm text-gray-700">
+                <li><a href="#" class="hover:text-gray-900">Bars</a></li>
+                <li><a href="#" class="hover:text-gray-900">Truffles</a></li>
+                <li><a href="#" class="hover:text-gray-900">Chips</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <p class="font-semibold mb-3">Company</p>
+            <ul class="space-y-2 text-sm text-gray-700">
+                <li><a href="#" class="hover:text-gray-900">About</a></li>
+                <li><a href="#" class="hover:text-gray-900">Ingredients</a></li>
+                <li><a href="#" class="hover:text-gray-900">Contact</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <p class="font-semibold mb-3">Follow Us</p>
+            <ul class="space-y-2 text-sm text-gray-700">
+                <li><a href="#" class="hover:text-gray-900">Instagram</a></li>
+                <li><a href="#" class="hover:text-gray-900">Twitter</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <p class="text-center text-gray-500 text-sm mt-10">
+        © {{ now|date:"Y" }} Vero. All rights reserved.
+    </p>
+</footer>
+
+{% block scripts %}
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

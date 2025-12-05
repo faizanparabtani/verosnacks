@@ -1,0 +1,14 @@
+[project]
+name = "verosnacks"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "cookiecutter>=2.6.0",
+    "django>=6.0",
+    "django-browser-reload>=1.21.0",
+    "django-tailwind>=4.4.1",
+    "dotenv>=0.9.9",
+    "honcho>=2.0.0",
+]
