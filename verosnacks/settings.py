@@ -25,7 +25,7 @@ INSTALLED_APPS = [
 
     'app',
     'tailwind',
-    'theme',
+    'frontend',
 ]
 
 if DEBUG:
@@ -50,7 +50,7 @@ ROOT_URLCONF = 'verosnacks.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'theme/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -97,5 +97,11 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR/'staticfiles'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend/static'),
+    os.path.join(BASE_DIR, 'frontend/static_src/src'),
+]
 
-TAILWIND_APP_NAME = "theme"
+
+TAILWIND_APP_NAME = "frontend"

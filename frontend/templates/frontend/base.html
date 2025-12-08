@@ -1,0 +1,80 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Vero{% endblock %}</title>
+    {% tailwind_css %}
+    {% block head %}{% endblock %}
+    <script src="https://kit.fontawesome.com/f30307189b.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="antialiased bg-white">
+<header class="w-full vero-beige-bg sticky shadow-md top-0 z-40">
+    <div class="mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="{% url 'index' %}">
+            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1764916494/VeroLogo_prqqv9.svg" 
+                 alt="Vero Logo" class="h-14">
+        </a>
+        <nav class="hidden md:flex space-x-8 text-md font-semibold">
+            <a href="#" class="vero-brown-text">Shop</a>
+            <a href="#" class="vero-brown-text">About</a>
+            <a href="#" class="vero-brown-text">Ingredients</a>
+            <a href="#" class="vero-brown-text">Contact</a>
+        </nav>
+        <button id="hamburger" class="md:hidden text-2xl focus:outline-none">
+            <i id="hamburger-open" class="fas fa-bars"></i>
+            <i id="hamburger-close" class="fas fa-xmark hidden"></i>
+        </button>
+    </div>
+    <nav id="mobile-menu" class="md:hidden hidden vero-beige-bg px-6 pb-4 space-y-3 text-lg font-semibold">
+        <a href="#" class="block py-2 border-b border-gray-300">Shop</a>
+        <a href="#" class="block py-2 border-b border-gray-300">About</a>
+        <a href="#" class="block py-2 border-b border-gray-300">Ingredients</a>
+        <a href="#" class="block py-2">Contact</a>
+    </nav>
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+<footer class="bg-gray-900 py-12">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div>
+            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1764916494/VeroLogo_prqqv9.svg" alt="Vero Logo" class="h-18">
+            <p class="text-sm text-white">Tagline</p>
+        </div>
+        <div>
+            <h2 class="font-semibold text-xl text-[#ede5cc] mb-3">Shop</h2>
+            <ul class="space-y-2 text-sm text-white">
+                <li><a href="#" class="hover:text-white">Bars</a></li>
+                <li><a href="#" class="hover:text-white">Truffles</a></li>
+                <li><a href="#" class="hover:text-white">Chips</a></li>
+            </ul>
+        </div>
+        <div>
+            <p class="font-semibold text-xl text-[#ede5cc] mb-3">Company</p>
+            <ul class="space-y-2 text-sm text-white">
+                <li><a href="#" class="hover:text-white">About</a></li>
+                <li><a href="#" class="hover:text-white">Ingredients</a></li>
+                <li><a href="#" class="hover:text-white">Contact</a></li>
+            </ul>
+        </div>
+        <div>
+            <p class="font-semibold text-xl text-[#ede5cc] mb-3">Follow Us</p>
+            <ul class="space-y-2 text-sm text-white">
+                <li><a href="#" class="hover:text-white">Instagram</a></li>
+                <li><a href="#" class="hover:text-white">Twitter</a></li>
+            </ul>
+        </div>
+    </div>
+    <p class="text-center text-white text-sm mt-10">
+    © {% now "Y" %} Vero. All rights reserved.
+    </p>
+</footer>
+<script src="{% static 'js/app.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+</body>
+</html>

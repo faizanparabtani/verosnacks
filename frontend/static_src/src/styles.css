@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Wendy+One&display=swap');
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {  --color-beige: #EDE5CC;  --color-brown: #79431F;  --color-gold: #D4942D;}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    font-family: 'Wendy One', sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Wendy One', sans-serif;
+  }
+
+  .swiper-wrapper {
+    transition-timing-function: ease-in-out !important;
+  }
+} 
+
+@layer components{
+
+  .vero-beige-text{
+    @apply text-[#EDE5CC];
+  }
+
+  .vero-brown-text{
+    @apply text-[#79431F];
+  }
+
+  .vero-gold-text{
+    @apply text-[#D4942D];
+  }
+
+  .vero-beige-bg{
+    @apply bg-[#EDE5CC];
+  }
+
+  .vero-brown-bg{
+    @apply bg-[#79431F];
+  }
+
+  .vero-gold-bg{
+    @apply bg-[#D4942D];
+  }
+
+  /* Body */
+  /* Main Components */
+
+  .container{
+    @apply max-w-6xl mx-auto px-6 pt-12 pb-12 flex flex-col-reverse lg:flex-row items-center gap-14;
+  }
+}
+
+@source "../../../**/*.{html,py,js}";
+
