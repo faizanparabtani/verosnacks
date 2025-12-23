@@ -1,0 +1,53 @@
+{% extends "frontend/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}{{ product.name }} - Vero{% endblock %}
+
+{% block content %}
+<div class="bg-white py-12">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row gap-12">
+            <!-- Product Image -->
+            <div class="w-full md:w-1/2">
+                <div class="relative aspect-square overflow-hidden rounded-3xl bg-beige/10 border border-beige/50 shadow-inner">
+                    <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/800x800?text={{ product.name }}{% endif %}" 
+                         alt="{{ product.name }}" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="w-full md:w-1/2 flex flex-col justify-center">
+                <nav class="mb-6 text-sm font-bold">
+                    <a href="{% url 'product_list' %}" class="hover:text-gold text-brown/60 transition-colors">Shop</a> 
+                    <span class="mx-2 text-beige">/</span>
+                    <a href="{% url 'product_list_by_category' product.category.slug %}" class="hover:text-gold text-brown/60 transition-colors">{{ product.category.name }}</a>
+                </nav>
+                <h1 class="text-6xl font-bold mb-6 text-gray-900 leading-tight">{{ product.name }}</h1>
+                <p class="text-4xl font-bold text-gold mb-10">${{ product.price }}</p>
+                <div class="prose max-w-none mb-12 text-brown text-lg leading-relaxed">
+                    {{ product.description|linebreaks }}
+                </div>
+
+                <div class="bg-gray-900 p-8 rounded-3xl shadow-xl border border-gold/20">
+                    <form action="{% url 'cart_add' product.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="flex flex-col sm:flex-row items-end gap-6">
+                            <div class="w-full sm:w-32">
+                                <label class="block text-beige text-xs font-bold uppercase tracking-wider mb-2">Quantity</label>
+                                <div class="text-beige">
+                                    {{ cart_product_form.quantity|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="hidden">
+                                {{ cart_product_form.override }}
+                            </div>
+                            <button type="submit" class="flex-1 w-full bg-gold text-gray-900 font-black py-5 px-8 rounded-2xl hover:bg-white hover:text-gray-900 transition-all duration-300 shadow-lg text-lg uppercase tracking-widest">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

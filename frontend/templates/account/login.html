@@ -1,0 +1,23 @@
+{% extends "frontend/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Login - Vero{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 py-12">
+    <div class="max-w-md mx-auto px-6">
+        <div class="bg-white rounded-2xl shadow-sm p-8 border border-beige/30">
+            <h1 class="text-3xl font-bold mb-6 text-gray-900 text-center">Login</h1>
+            <form method="post" action="{% url 'login' %}" class="space-y-6 text-brown">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="w-full bg-brown text-beige font-bold py-4 rounded-full hover:bg-gray-900 hover:text-gold transition-all">
+                    Login
+                </button>
+            </form>
+            <p class="mt-6 text-center text-brown/70">
+                Don't have an account? <a href="{% url 'register' %}" class="text-gold font-bold hover:underline">Register here</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

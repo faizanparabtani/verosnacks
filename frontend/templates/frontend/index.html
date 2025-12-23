@@ -77,15 +77,48 @@
          alt="Ingredient board">
   </div>
 </section>
-<section class="py-20">
+<section class="py-24 bg-beige/30">
   <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-3xl text-gold font-bold mb-12 text-center">Real ingredients. Real taste.</h2>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      {% for i in "1234" %}
-      <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center">
-        <img src="{% static 'images/ingredient.png' %}" class="w-24 h-24 object-cover rounded-lg mb-4" alt="">
-        <h3 class="font-bold text-lg mb-2 text-gold">Ingredient {{ forloop.counter }}</h3>
-        <p class="text-gray-900 text-sm">Clean, whole and proudly shown upfront.</p>
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+        <div>
+            <h2 class="text-5xl font-bold text-gray-900 mb-4">Our Best Sellers</h2>
+            <p class="text-brown text-xl max-w-lg">Hand-crafted with integrity, loved by our community. Discover the flavors that started it all.</p>
+        </div>
+        <a href="{% url 'product_list' %}" class="text-gold font-bold text-lg hover:text-gray-900 transition-colors flex items-center gap-2">
+            View All Snacks <i class="fas fa-arrow-right text-sm"></i>
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      {% for product in products %}
+      <div class="group relative bg-white rounded-3xl p-4 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-beige/50">
+        <!-- Image Container -->
+        <div class="relative aspect-square overflow-hidden rounded-2xl bg-beige/20 mb-6">
+          <a href="{% url 'product_detail' product.id product.slug %}">
+            <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/600x600?text={{ product.name }}{% endif %}" 
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                 alt="{{ product.name }}">
+          </a>
+          <!-- Price Tag -->
+          <div class="absolute top-4 right-4 bg-gray-900 text-gold font-bold px-4 py-2 rounded-full shadow-lg">
+            ${{ product.price }}
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="px-2 pb-2">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2 group-hover:text-gold transition-colors">{{ product.name }}</h3>
+          <p class="text-brown/70 text-sm mb-6 line-clamp-2">Real ingredients, real taste. No compromises on nutrition.</p>
+          
+          <a href="{% url 'product_detail' product.id product.slug %}" 
+             class="block w-full text-center py-4 bg-brown text-beige font-bold rounded-xl group-hover:bg-gray-900 group-hover:text-gold transition-all duration-300">
+            View Details
+          </a>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-span-4 py-20 text-center bg-white/50 rounded-3xl border-2 border-dashed border-beige">
+          <p class="text-brown/50 text-xl font-bold italic">Our ovens are busy... Check back soon for fresh snacks!</p>
       </div>
       {% endfor %}
     </div>
@@ -93,12 +126,12 @@
 </section>
 <section class="bg-white py-16 text-white text-center">
   <div class="max-w-4xl mx-auto px-6 space-y-6">
-    <h2 class="text-3xl font-bold">No secrets. No shortcuts.</h2>
-    <p class="text-gray-900 text-2xl">
+    <h2 class="text-3xl font-bold text-brown">No secrets. No shortcuts.</h2>
+    <p class="text-brown text-2xl">
       Our promise is simple: delicious snacks made with integrity.  
       Nothing more. Nothing less.
     </p>
-    <a href="#" class="btn-custom">
+    <a href="{% url 'product_list' %}" class="inline-block bg-brown text-beige font-bold px-8 py-4 rounded-full hover:bg-gray-900 hover:text-gold transition-all">
       Explore Our Snacks
     </a>
   </div>

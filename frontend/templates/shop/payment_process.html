@@ -1,0 +1,24 @@
+{% extends "frontend/base.html" %}
+{% block title %}Pay for your order - Vero{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 py-12">
+    <div class="max-w-xl mx-auto px-6 text-center">
+        <div class="bg-white rounded-2xl shadow-sm p-12 border border-beige/30">
+            <h1 class="text-3xl font-bold mb-6 text-brown">Order Summary</h1>
+            <p class="text-lg text-brown/70 mb-8">You are about to pay <span class="font-bold text-gold">${{ order.get_total_cost }}</span> for your order.</p>
+            
+            <form action="{% url 'payment_process' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="w-full bg-brown text-beige font-bold py-4 rounded-full hover:bg-gray-900 hover:text-gold transition-all">
+                    Pay with Stripe
+                </button>
+            </form>
+            
+            <p class="mt-6 text-sm text-brown/50">
+                <i class="fas fa-lock mr-2"></i> Secure encrypted payment powered by Stripe
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
