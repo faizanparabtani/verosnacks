@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
     const hamburgerBtn = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -19,16 +20,16 @@ function initOfferSwiper() {
     const swiper = new Swiper(".offer-swiper", {
         slidesPerView: 1,
         loop: true,
-        speed: 2000,
+        speed: 800,
         centeredSlides: true,
         allowTouchMove: false, // text isn't swipeable like a carousel
         autoplay: {
-            delay: 3000,
+            delay: 2200,
             disableOnInteraction: false,
             pauseOnMouseEnter: false,
         },
         effect: "slide",
-        centeredSlides true,
+
         watchOverflow: true,
         observer: true,
         observeParents: true,

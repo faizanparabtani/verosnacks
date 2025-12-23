@@ -4,118 +4,103 @@
 {% block content %}
 <section class="relative overflow-hidden bg-white">
   <div class="relative w-full">
-    <div class="offer-swiper swiper h-10 md:h-12">
+    <div class="offer-swiper swiper h-12">
         <div class="swiper-wrapper">
             <div class="swiper-slide flex justify-center items-center">
-                <p class="text-lg md:text-xl font-semibold text-gray-800">
+                <p class="offer-paragraph">
                     Free shipping over $50
                 </p>
             </div>
             <div class="swiper-slide flex justify-center items-center">
-                <p class="text-lg md:text-xl font-semibold text-gray-800">
-                    New holiday flavors now available
+                <p class="offer-paragraph">
+                    New holiday flavors now available!!
                 </p>
             </div>
             <div class="swiper-slide flex justify-center items-center">
-                <p class="text-lg md:text-xl font-semibold text-gray-800">
+                <p class="offer-paragraph">
                     10% off your first order
                 </p>
             </div>
             <div class="swiper-slide flex justify-center items-center">
-                <p class="text-lg md:text-xl font-semibold text-gray-800">
+                <p class="offer-paragraph">
                     Only Real Ingredients — No Compromises
                 </p>
             </div>
         </div>
-      </div>
+    </div>
   </div>
   <div class="container">
-    <div class="w-full lg:w-2/3">
-      <p class="text-2xl text-gray-900 max-w-md mb-8">
-        Clean, transparent, minimally processed foods made from real ingredients.<br>
-        <span class="vero-gold-text">No fillers. No shortcuts. No nonsense.</span>
+    <div class="w-full lg:w-1/2">
+      <p class="text-5xl text-gray-900 mb-8 whitespace-nowrap">
+        Nature’s Ingredients,<br><span class="text-gold">Nothing Hidden.</span><br>
       </p>
-      <div class="flex space-x-4">
-        <a href="#" class="px-6 py-3 bg-gray-900 text-white font-medium rounded-md hover:text-white transition-all duration-300">
-          Shop Now
-        </a>
-        <a href="#" class="px-6 py-3 border border-gray-900 text-gray-900 font-medium rounded-md hover:bg-beige hover:text-gray-900 transition-all duration-300">
-          What’s Inside?
-        </a>
+      <div class="container">
+        <div class="text-gold flex-col items-center justify-center space-y-3">
+          <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766283445/K_y1iujt.png" class="w-auto h-36 object-cover rounded-xl" alt="">
+          <p class="font-semibold text-3xl">Bars</p>
+        </div>
+        <div class="text-gold flex items-center space-y-3">
+          <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766341170/truffle_m7sy1k.webp" class="w-auto h-48 object-cover rounded-xl" alt="">
+          <p class="font-semibold">Truffles</p>
+        </div>
+        <div class="text-gold flex items-center space-y-3">
+          <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766342334/Gemini_Generated_Image_avzif2avzif2avzi-1_d9inhg.webp" class="w-auto h-48 object-cover rounded-xl" alt="">
+          <p class="font-semibold">Chips</p>
+        </div>
       </div>
+      <!-- <div class="flex space-x-4"> -->
+      <!--   <a href="#" class="btn-custom"> -->
+      <!--     Shop Now -->
+      <!--   </a> -->
+      <!--   <a href="#" class="btn-custom"> -->
+      <!--     How we do it -->
+      <!--   </a> -->
+      <!-- </div> -->
     </div>
     <!-- Floating elements -->
-    <div class="w-full lg:w-1/3">
-      <img src="#" 
-           class="w-full max-w-lg mx-auto drop-shadow-xl rounded-xl object-cover" 
+    <div class="w-full lg:w-1/2">
+      <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766340996/Gemini_Generated_Image_vxajjzvxajjzvxaj-1_i05oqn.webp" 
+           class="w-full max-w-lg mx-auto drop-shadow-xl rounded-xl object-cover slow-bounce"
            alt="Floating elements">
     </div>
   </div>
 </section>
-<section class="py-3">
-  <div class="container">
-    <div class="flex flex-col items-center space-y-3">
-      <img src="{% static 'images/cat1.png' %}" class="w-24 h-24 object-cover rounded-xl shadow" alt="">
-      <p class="font-semibold">Bars</p>
-    </div>
-    <div class="flex flex-col items-center space-y-3">
-      <img src="{% static 'images/cat2.png' %}" class="w-24 h-24 object-cover rounded-xl shadow" alt="">
-      <p class="font-semibold">Truffles</p>
-    </div>
-    <div class="flex flex-col items-center space-y-3">
-      <img src="{% static 'images/cat3.png' %}" class="w-24 h-24 object-cover rounded-xl shadow" alt="">
-      <p class="font-semibold">Chips</p>
-    </div>
-  </div>
-</section>
-<!-- ================= TRANSPARENCY ================= -->
-<section class="vero-beige-bg py-20">
+<section class="bg-gray-900 py-10">
   <div class="max-w-6xl mx-auto px-6 text-center">
-    <h2 class="text-3xl md:text-5xl font-extrabold mb-6">We choose transparency.</h2>
-
-    <p class="text-gray-700 text-lg max-w-2xl mx-auto mb-12">
+    <h2 class="text-3xl text-gold md:text-5xl font-extrabold mb-6">We choose transparency.</h2>
+    <p class="text-white text-xl max-w-2xl mx-auto mb-12">
       Every ingredient we use is listed clearly, openly, and without disguises.  
       No confusing labels. No artificial gimmicks. Just real food.
     </p>
-
     <img src="{% static 'images/ingredients-board.png' %}"
          class="w-full max-w-4xl mx-auto rounded-xl shadow-lg"
          alt="Ingredient board">
   </div>
 </section>
-
-<!-- ================= INGREDIENT GRID ================= -->
 <section class="py-20">
   <div class="max-w-7xl mx-auto px-6">
-
-    <h2 class="text-3xl font-bold mb-12 text-center">Real ingredients. Real taste.</h2>
-
+    <h2 class="text-3xl text-gold font-bold mb-12 text-center">Real ingredients. Real taste.</h2>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
       {% for i in "1234" %}
       <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center">
         <img src="{% static 'images/ingredient.png' %}" class="w-24 h-24 object-cover rounded-lg mb-4" alt="">
-        <h3 class="font-bold text-lg mb-2">Ingredient {{ forloop.counter }}</h3>
-        <p class="text-gray-600 text-sm">Clean, whole and proudly shown upfront.</p>
+        <h3 class="font-bold text-lg mb-2 text-gold">Ingredient {{ forloop.counter }}</h3>
+        <p class="text-gray-900 text-sm">Clean, whole and proudly shown upfront.</p>
       </div>
       {% endfor %}
-
     </div>
   </div>
 </section>
-
-<!-- ================= DARK BAND ================= -->
 <section class="bg-white py-16 text-white text-center">
   <div class="max-w-4xl mx-auto px-6 space-y-6">
     <h2 class="text-3xl font-bold">No secrets. No shortcuts.</h2>
-    <p class="text-gray-300 text-lg">
-      Our promise is simple: delicious foods made with integrity.  
+    <p class="text-gray-900 text-2xl">
+      Our promise is simple: delicious snacks made with integrity.  
       Nothing more. Nothing less.
     </p>
-    <a href="#" class="inline-block px-8 py-4 bg-gray-600 rounded-md font-medium hover:bg-gray-600">
-      Explore Our Foods
+    <a href="#" class="btn-custom">
+      Explore Our Snacks
     </a>
   </div>
 </section>
-
 {% endblock %}

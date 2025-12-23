@@ -2,7 +2,17 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-@theme {  --color-beige: #EDE5CC;  --color-brown: #79431F;  --color-gold: #D4942D;}
+@theme {
+  --color-beige: #EDE5CC;
+  --color-brown: #3D1700;
+  --color-gold: #D4942D;
+
+  --color-primary: var(--color-brown);
+  --color-secondary: var(--color-gold);
+  --color-accent: var(--color-beige);
+
+  --font-wendy: 'Wendy One', sans-serif;
+}
 
 @layer base {
   html {
@@ -10,51 +20,45 @@
   }
 
   body {
-    font-family: 'Wendy One', sans-serif;
+    font-family: var(--font-wendy);
+    @apply bg-beige text-brown;
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Wendy One', sans-serif;
+    font-family: var(--font-wendy);
   }
 
   .swiper-wrapper {
     transition-timing-function: ease-in-out !important;
   }
-} 
 
-@layer components{
+  @keyframes slowBounce {
+      0%, 100% {
+        transform: translateY(0);
+        animation-timing-function: ease-in-out;
+      }
+      50% {
+        transform: translateY(-25px);
+        animation-timing-function: ease-in-out;
+      }
+    }
+    .slow-bounce {
+      animation: slowBounce 3s ease-in-out infinite;
+    }
+}
 
-  .vero-beige-text{
-    @apply text-[#EDE5CC];
+@layer components {
+  .container {
+    @apply max-w-6xl py-8 mx-auto flex flex-col-reverse lg:flex-row items-center gap-14;
   }
 
-  .vero-brown-text{
-    @apply text-[#79431F];
+  .offer-paragraph {
+    @apply text-lg md:text-xl font-semibold bg-gray-900 text-white text-center px-4;
   }
 
-  .vero-gold-text{
-    @apply text-[#D4942D];
-  }
-
-  .vero-beige-bg{
-    @apply bg-[#EDE5CC];
-  }
-
-  .vero-brown-bg{
-    @apply bg-[#79431F];
-  }
-
-  .vero-gold-bg{
-    @apply bg-[#D4942D];
-  }
-
-  /* Body */
-  /* Main Components */
-
-  .container{
-    @apply max-w-6xl mx-auto px-6 pt-12 pb-12 flex flex-col-reverse lg:flex-row items-center gap-14;
+  .btn-custom {
+    @apply px-6 py-3 bg-brown text-beige font-medium rounded-full hover:text-gold hover:bg-gray-900 transition-all duration-300;
   }
 }
 
 @source "../../../**/*.{html,py,js}";
-
