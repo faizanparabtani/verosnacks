@@ -3,7 +3,7 @@ name = "verosnacks"
 version = "0.1.0"
 description = "Official Site for Vero"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.13"
 dependencies = [
     "celery>=5.6.0",
     "cloudinary>=1.44.1",
