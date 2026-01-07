@@ -19,7 +19,7 @@ FROM python:3.14-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     UV_PROJECT_ENVIRONMENT=/venv \
-    UV_PYTHON=/usr/local/bin/python \
+    UV_PYTHON_DOWNLOADS=auto \
     PATH="/venv/bin:$PATH"
 
 WORKDIR /code
@@ -35,13 +35,13 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 # Install Python dependencies
 COPY pyproject.toml uv.lock ./
-RUN uv sync --python /usr/local/bin/python --frozen --no-dev --no-install-project
+RUN uv sync --frozen --no-dev --no-install-project
 
 # Copy project files
 COPY . .
 
 # Install the project itself
-RUN uv sync --python /usr/local/bin/python --frozen --no-dev
+RUN uv sync --frozen --no-dev
 
 # Copy built frontend assets from builder
 COPY --from=frontend-builder /app/frontend/static/css/dist/styles.css /code/frontend/static/css/dist/styles.css
