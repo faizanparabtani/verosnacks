@@ -1,0 +1,79 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block title %}Our Story - Vero{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-gray-900 py-16  overflow-hidden">
+    <!-- Abstract Background Pattern -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-beige/10 rounded-full blur-3xl -ml-20 -mb-20"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+        <p class="text-gold font-black uppercase tracking-[0.3em] mb-3 text-sm md:text-base">
+            Improving lives, one snack at a time
+        </p>
+        <h1 class="text-5xl font-black text-beige mb-6">Our Story</h1>
+        
+        <div class="max-w-3xl mx-auto">
+            <p class="text-xl  text-beige leading-relaxed font-medium">
+                We want to give Canada <span class="text-gold font-black">healthy and nutritious</span> snacking options which improve the health and quality of lives of people.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Founders Section -->
+<section class="py-16 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-start gap-12 md:gap-20">
+            <!-- Left Column: Image & Affiliations -->
+            <div class="w-full md:w-5/12 space-y-4">
+                <!-- Founders Image -->
+                <div class="relative w-64 mx-auto md:mx-0">
+                    <div class="absolute inset-0 bg-gold/20 rounded-3xl rotate-3 transform"></div>
+                    <img src="https://placehold.co/600x600/3D1700/EDE5CC?text=Faizan+%26+Rajnish" 
+                         alt="Faizan and Rajnish" 
+                         class="relative w-full rounded-3xl shadow-xl rotate-0 transition-transform hover:-rotate-1 duration-500">
+                </div>
+
+                <!-- Affiliations -->
+                <div class="text-center md:text-left w-full mx-auto md:mx-0">
+                    <p class="text-brown/40 font-bold text-md tracking-widest uppercase mb-2">Proudly Affiliated With</p>
+                    <div class="flex justify-center">
+                        <!-- McMaster Logo -->
+                        <div class="p-2 rounded-lg transition-transform hover:scale-105 duration-300 flex items-center justify-center">
+                            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766887001/mcmaster_logo_chibdd.jpg" 
+                                 alt="McMaster University" 
+                                 class="h-24 w-auto object-contain transition-all duration-500 opacity-70 group-hover:opacity-100">
+                        </div>
+                        <!-- Innovation Factory Logo -->
+                        <div class="p-2 rounded-lg transition-transform hover:scale-105 duration-300  flex items-center justify-center">
+                            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766887044/InnovationFactory_smmock.png" 
+                                 alt="Innovation Factory" 
+                                 class="h-24 w-auto object-contain transition-all duration-500 opacity-70 group-hover:opacity-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Content -->
+            <div class="w-full md:w-7/12 text-center md:text-left md:pt-8">
+                <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-8">Meet the Founders</h2>
+                <div class="space-y-6 text-lg md:text-xl text-brown/80 leading-relaxed">
+                    <p>
+                        We are <strong class="text-brown text-2xl">Faizan</strong> and <strong class="text-brown text-2xl">Rajnish</strong>.
+                    </p>
+                    <p>
+                        As <span class="font-bold text-gold">McMaster MEng graduates</span>, we combined our engineering mindset with our passion for health to create something truly special. 
+                    </p>
+                    <p>
+                        We noticed a gap in the market for snacks that were genuinely healthy without compromising on taste. We believe that what you eat shouldn't just taste good—it should fuel your ambition and improve your quality of life.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

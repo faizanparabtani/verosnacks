@@ -1,0 +1,90 @@
+{% extends "frontend/base.html" %}
+
+{% block title %}Contact Us - Vero{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-brown py-16 md:py-24 overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+        <h1 class="text-4xl md:text-5xl font-black text-beige mb-4">Get in Touch</h1>
+        <p class="text-xl text-gold/80 font-bold max-w-xl mx-auto">
+            Questions? Feedback? Just want to say hi? We'd love to hear from you.
+        </p>
+    </div>
+</section>
+
+<section class="py-16 md:py-24 bg-beige/20">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <!-- Contact Info -->
+            <div class="space-y-10">
+                <div>
+                    <h2 class="text-3xl font-black text-gray-900 mb-6">Contact Information</h2>
+                    <p class="text-brown/80 text-lg leading-relaxed mb-8">
+                        Whether you're interested in partnering with us or just have a question about our ingredients, our team is here to help.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gold shadow-sm shrink-0">
+                            <i class="fas fa-map-marker-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-lg">Our Office</h3>
+                            <p class="text-brown/70">123 Innovation Drive,<br>Hamilton, ON L8P 1A1<br>Canada</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gold shadow-sm shrink-0">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-lg">Email Us</h3>
+                            <p class="text-brown/70">hello@verosnacks.ca</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gold shadow-sm shrink-0">
+                            <i class="fas fa-phone text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-lg">Call Us</h3>
+                            <p class="text-brown/70">+1 (905) 555-0123</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-beige">
+                <form action="#" method="POST" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label for="name" class="block text-sm font-bold text-brown mb-2 uppercase tracking-wide">Name</label>
+                        <input type="text" id="name" name="name" class="w-full bg-beige/10 border-2 border-beige rounded-xl px-4 py-3 focus:outline-none focus:border-gold focus:ring-0 transition-colors" placeholder="Your Name">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-bold text-brown mb-2 uppercase tracking-wide">Email</label>
+                        <input type="email" id="email" name="email" class="w-full bg-beige/10 border-2 border-beige rounded-xl px-4 py-3 focus:outline-none focus:border-gold focus:ring-0 transition-colors" placeholder="john@example.com">
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-bold text-brown mb-2 uppercase tracking-wide">Message</label>
+                        <textarea id="message" name="message" rows="4" class="w-full bg-beige/10 border-2 border-beige rounded-xl px-4 py-3 focus:outline-none focus:border-gold focus:ring-0 transition-colors" placeholder="How can we help?"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brown text-beige font-black text-lg py-4 rounded-xl hover:bg-gray-900 hover:text-gold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

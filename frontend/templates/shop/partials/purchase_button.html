@@ -1,0 +1,43 @@
+{% load cart_tags %}
+{% with cart_qty=cart|get_quantity:product.id %}
+<div id="purchase-btn-{{ product.id }}" class="w-full" {% if hx_swap_oob %}hx-swap-oob="true"{% endif %}>
+    {% if cart_qty > 0 %}
+        <!-- Quantity Stepper (Item is in cart) -->
+        <div class="quantity-stepper flex items-center bg-gray-900 rounded-xl border border-gold/20 p-1 w-full justify-between shadow-lg">
+            <button type="button" 
+                    hx-post="{% url 'cart_update' product.id %}" 
+                    hx-vals='{"quantity": "{{ cart_qty|add:"-1" }}"}'
+                    hx-target="#purchase-btn-{{ product.id }}"
+                    hx-swap="outerHTML"
+                    {% if cart_qty == 1 %}hx-confirm="Remove this item from your cart?"{% endif %}
+                    class="w-12 h-12 flex items-center justify-center text-gold hover:text-white transition-colors">
+                <i class="fas fa-minus"></i>
+            </button>
+            <div class="flex flex-col items-center">
+                <span class="text-white font-black text-lg leading-none">{{ cart_qty }}</span>
+                <span class="text-[8px] text-gold/50 font-black uppercase tracking-widest mt-1">In Cart</span>
+            </div>
+            <button type="button" 
+                    hx-post="{% url 'cart_update' product.id %}" 
+                    hx-vals='{"quantity": "{{ cart_qty|add:"1" }}"}'
+                    hx-target="#purchase-btn-{{ product.id }}"
+                    hx-swap="outerHTML"
+                    class="w-12 h-12 flex items-center justify-center text-gold hover:text-white transition-colors">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    {% else %}
+        <!-- Add to Cart Button (Item NOT in cart) -->
+        <form hx-post="{% url 'cart_add' product.id %}" 
+              hx-target="#purchase-btn-{{ product.id }}" 
+              hx-swap="outerHTML">
+            {% csrf_token %}
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" 
+                    class="block w-full text-center bg-brown text-beige font-black py-4 rounded-xl hover:bg-gray-900 hover:text-gold transition-all uppercase tracking-widest text-xs shadow-md group">
+                Add To Cart <i class="fas fa-plus ml-2 group-hover:rotate-90 transition-transform"></i>
+            </button>
+        </form>
+    {% endif %}
+</div>
+{% endwith %}

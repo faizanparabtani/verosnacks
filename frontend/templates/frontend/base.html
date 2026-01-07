@@ -1,94 +1,168 @@
 {% load static tailwind_tags %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Vero{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    {% tailwind_preload_css %}
     {% tailwind_css %}
     {% block head %}{% endblock %}
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     <script src="https://kit.fontawesome.com/f30307189b.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="antialiased bg-white">
+<body class="antialiased bg-beige text-brown font-arvo pb-16 md:pb-0" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+<!-- Top Header -->
 <header class="w-full bg-beige sticky shadow-md top-0 z-40">
-    <div class="mx-auto px-6 py-3 flex items-center justify-between">
-        <a href="{% url 'index' %}">
+    <div class="mx-auto px-6 py-3 flex items-center justify-between relative h-16 md:h-20">
+        
+        <!-- Mobile: Hamburger (Left) -->
+        <button id="hamburger" class="md:hidden text-2xl focus:outline-none z-50 text-brown w-10 h-10 flex items-center justify-center group relative">
+            <i id="hamburger-open" class="fas fa-bars transition-all duration-300 group-[.is-active]:opacity-0 group-[.is-active]:rotate-90 absolute"></i>
+            <i id="hamburger-close" class="fas fa-xmark transition-all duration-300 opacity-0 -rotate-90 group-[.is-active]:opacity-100 group-[.is-active]:rotate-0 absolute"></i>
+        </button>
+
+        <!-- Desktop: Left Navigation -->
+        <nav class="hidden md:flex items-center space-x-8 text-md font-semibold w-1/3">
+            
+            <a href="{% url 'index' %}" class="text-brown hover:text-gold transition-colors">Home</a>
+            <a href="{% url 'product_list' %}" class="text-brown hover:text-gold transition-colors">Shop</a>
+            <a href="{% url 'our_story' %}" class="text-brown hover:text-gold transition-colors">Our Story</a>
+            <a href="{% url 'contact' %}" class="text-brown hover:text-gold transition-colors">Contact</a>
+        </nav>
+
+        <!-- Logo (Centered Absolute) -->
+        <a href="{% url 'index' %}" class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
             <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766333827/VeroLogo_1_v0n1yn.png" 
-                 alt="Vero Logo" class="h-14">
+                 alt="Vero Logo" class="h-10 md:h-16 transition-all duration-300">
         </a>
-        <nav class="hidden md:flex space-x-8 text-lg font-semibold items-center">
-            <a href="{% url 'product_list' %}" class="text-brown">Shop</a>
-            <a href="{% url 'cart_detail' %}" class="text-brown hover:text-gold relative">
-                <i class="fas fa-shopping-cart text-2xl"></i>
+
+        <!-- Desktop: Right Actions (Cart & Account) -->
+        <div class="hidden md:flex items-center justify-end space-x-8 w-1/3">
+            <a href="{% url 'cart_detail' %}" class="text-brown hover:text-gold relative group" id="cart-icon-nav">
+                <i class="fas fa-shopping-cart text-2xl group-hover:scale-110 transition-transform"></i>
                 {% with total_items=cart|length %}
                     {% if total_items > 0 %}
                         <span class="absolute -top-2 -right-3 bg-gold text-brown rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold">{{ total_items }}</span>
                     {% endif %}
                 {% endwith %}
             </a>
+
             {% if request.user.is_authenticated %}
-                <a href="{% url 'profile_edit' %}" class="text-brown">Account</a>
-                <form action="{% url 'logout' %}" method="post" class="inline">
-                    {% csrf_token %}
-                    <button type="submit" class="text-brown">Logout</button>
-                </form>
+                <a href="{% url 'order_list' %}" class="text-brown hover:text-gold flex items-center gap-2 group">
+                    <div class="w-8 h-8 rounded-full bg-brown text-beige flex items-center justify-center font-bold text-sm border-2 border-transparent group-hover:border-gold transition-all">
+                        {{ request.user.username|slice:":1"|upper }}
+                    </div>
+                </a>
             {% else %}
-                <a href="{% url 'login' %}" class="text-brown">Login</a>
+                <a href="{% url 'login' %}" class="text-brown hover:text-gold font-bold">Login</a>
             {% endif %}
-        </nav>
-        <button id="hamburger" class="md:hidden text-2xl focus:outline-none">
-            <i id="hamburger-open" class="fas fa-bars"></i>
-            <i id="hamburger-close" class="fas fa-xmark hidden"></i>
-        </button>
+        </div>
+
+        <!-- Mobile: Spacer for balance -->
+        <div class="md:hidden w-6"></div>
     </div>
-    <nav id="mobile-menu" class="md:hidden hidden vero-beige-bg px-6 pb-4 space-y-3 text-lg font-semibold">
-        <a href="{% url 'product_list' %}" class="block py-2 border-b border-gray-300">Shop</a>
-        <a href="{% url 'cart_detail' %}" class="block py-2 border-b border-gray-300">Cart</a>
-        {% if request.user.is_authenticated %}
-            <a href="{% url 'profile_edit' %}" class="block py-2 border-b border-gray-300">Account</a>
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="block w-full text-left py-2">Logout</button>
-            </form>
-        {% else %}
-            <a href="{% url 'login' %}" class="block py-2">Login</a>
-        {% endif %}
+
+    <!-- Mobile Slide-Down Menu (General Navigation) -->
+    <nav id="mobile-menu" class="bg-beige border-t border-brown/10 absolute w-full left-0 top-full shadow-xl z-30 max-h-0 opacity-0 overflow-hidden pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] [&.menu-open]:max-h-screen [&.menu-open]:opacity-100 [&.menu-open]:pointer-events-auto">
+        <div class="px-6 py-4 space-y-4 text-lg font-black">
+            <a href="{% url 'index' %}" class="block text-gray-900 border-b border-brown/10 pb-2">Home</a>
+            <a href="{% url 'product_list' %}" class="block text-gray-900 border-b border-brown/10 pb-2">Shop</a>
+            <a href="{% url 'our_story' %}" class="block text-gray-900 border-b border-brown/10 pb-2">Our Story</a>
+            <a href="{% url 'contact' %}" class="block text-gray-900 border-b border-brown/10 pb-2">Contact Us</a>
+        </div>
     </nav>
 </header>
+
+<!-- Mobile Bottom Navigation (Sticky Dock) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
+    <div class="grid grid-cols-4 h-16 items-center">
+        <!-- Shop -->
+        <a href="{% url 'product_list' %}" class="flex flex-col items-center justify-center text-brown hover:text-gold transition-colors h-full">
+            <i class="fas fa-store text-lg mb-1"></i>
+            <span class="text-[10px] font-bold uppercase tracking-wide">Shop</span>
+        </a>
+
+        <!-- Search -->
+        <button onclick="toggleMobileSearch()" class="flex flex-col items-center justify-center text-brown hover:text-gold transition-colors h-full">
+            <i class="fas fa-search text-lg mb-1"></i>
+            <span class="text-[10px] font-bold uppercase tracking-wide">Search</span>
+        </button>
+
+        <!-- Account -->
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'order_list' %}" class="flex flex-col items-center justify-center text-brown hover:text-gold transition-colors h-full">
+                <div class="w-6 h-6 rounded-full bg-brown text-beige flex items-center justify-center font-bold text-[10px] mb-1">
+                    {{ request.user.username|slice:":1"|upper }}
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-wide">Account</span>
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" class="flex flex-col items-center justify-center text-brown hover:text-gold transition-colors h-full">
+                <i class="fas fa-user text-lg mb-1"></i>
+                <span class="text-[10px] font-bold uppercase tracking-wide">Login</span>
+            </a>
+        {% endif %}
+
+        <!-- Cart -->
+        <a href="{% url 'cart_detail' %}" class="flex flex-col items-center justify-center text-brown hover:text-gold transition-colors h-full relative" id="cart-icon-mobile">
+            <div class="relative">
+                <i class="fas fa-shopping-bag text-lg mb-1"></i>
+                {% with total_items=cart|length %}
+                    {% if total_items > 0 %}
+                        <span class="absolute -top-2 -right-2 bg-gold text-gray-900 rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-black border border-white">{{ total_items }}</span>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-wide">Cart</span>
+        </a>
+    </div>
+</div>
+
+<!-- Mobile Search Overlay -->
+<div id="mobile-search-overlay" class="hidden fixed inset-0 bg-gray-900/90 z-60 p-6 flex-col pt-32">
+    <button onclick="toggleMobileSearch()" class="absolute top-6 right-6 text-beige text-3xl">
+        <i class="fas fa-xmark"></i>
+    </button>
+    <h2 class="text-3xl font-black text-beige mb-8 text-center">Find your snack</h2>
+    <form action="{% url 'search' %}" method="get" class="w-full">
+        <div class="relative">
+            <input type="text" name="q" placeholder="Search bars, truffles..." class="w-full bg-white/10 border-2 border-beige/30 rounded-2xl p-6 text-white placeholder-white/50 text-xl font-bold focus:border-gold outline-none">
+            <button type="submit" class="absolute right-6 top-1/2 -translate-y-1/2 text-gold text-2xl">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
 <main>
     {% block content %}
     {% endblock %}
 </main>
+
 <footer class="bg-gray-900 py-12">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
             <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766333827/VeroLogo_1_v0n1yn.png" alt="Vero Logo" class="h-18">
-            <p class="text-sm text-white">Tagline</p>
+            <p class="text-sm text-white mt-4">Nature's Ingredients, Nothing Hidden.</p>
         </div>
         <div>
             <h2 class="font-semibold text-xl text-[#ede5cc] mb-3">Shop</h2>
             <ul class="space-y-2 text-lg text-white">
-                <li><a href="#" class="hover:text-white">Bars</a></li>
-                <li><a href="#" class="hover:text-white">Truffles</a></li>
-                <li><a href="#" class="hover:text-white">Chips</a></li>
+                <li><a href="{% url 'product_list' %}" class="hover:text-gold">All Products</a></li>
             </ul>
         </div>
         <div>
             <p class="font-semibold text-xl text-[#ede5cc] mb-3">Company</p>
             <ul class="space-y-2 text-lg text-white">
-                <li><a href="#" class="hover:text-white">About</a></li>
-                <li><a href="#" class="hover:text-white">Ingredients</a></li>
-                <li><a href="#" class="hover:text-white">Contact</a></li>
-            </ul>
-        </div>
-        <div>
-            <p class="font-semibold text-xl text-[#ede5cc] mb-3">Follow Us</p>
-            <ul class="space-y-2 text-lg text-white">
-                <li><a href="#" class="hover:text-white">Instagram</a></li>
-                <li><a href="#" class="hover:text-white">Twitter</a></li>
+                <li><a href="{% url 'our_story' %}" class="hover:text-gold">Our Story</a></li>
+                <li><a href="{% url 'contact' %}" class="hover:text-gold">Contact</a></li>
             </ul>
         </div>
     </div>
@@ -96,7 +170,35 @@
     © {% now "Y" %} Vero. All rights reserved.
     </p>
 </footer>
-<script src="{% static 'js/app.js' %}"></script>
+
+<!-- Toast Notifications Container -->
+<div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none pr-4 md:pr-0">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="toast-message pointer-events-auto bg-white/95 backdrop-blur-md border-l-4 border-gold shadow-[0_10px_40px_rgba(0,0,0,0.1)] rounded-r-xl p-5 flex items-start gap-4 transform transition-all duration-500 translate-x-12 opacity-0 min-w-[300px] max-w-sm" role="alert">
+                <div class="pt-0.5 shrink-0">
+                    {% if message.tags == 'success' %}
+                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                    {% elif message.tags == 'error' %}
+                        <i class="fas fa-circle-exclamation text-red-600 text-xl"></i>
+                    {% elif message.tags == 'warning' %}
+                        <i class="fas fa-triangle-exclamation text-amber-500 text-xl"></i>
+                    {% else %}
+                        <i class="fas fa-info-circle text-gold text-xl"></i>
+                    {% endif %}
+                </div>
+                <div class="grow">
+                    <p class="text-brown font-bold text-sm leading-tight">{{ message }}</p>
+                </div>
+                <button class="dismiss-toast text-brown/30 hover:text-brown transition-colors shrink-0">
+                    <i class="fas fa-xmark text-lg"></i>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<script src="{% static 'js/app.js' %}?v={% now 'U' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,39 @@
+{% load cart_tags %}
+{% with cart_qty=cart|get_quantity:product.id %}
+<div id="cart-stepper-{{ product.id }}" class="quantity-stepper flex items-center bg-beige/20 rounded-xl border-2 border-beige p-1 w-32 shadow-sm" hx-swap-oob="true">
+    <button type="button" 
+            hx-post="{% url 'cart_update' product.id %}" 
+            hx-vals='{"quantity": "{{ cart_qty|add:"-1" }}"}'
+            hx-target="#item-total-{{ product.id }}"
+            class="w-10 h-10 flex items-center justify-center text-brown hover:text-gold transition-colors">
+        <i class="fas fa-minus text-xs"></i>
+    </button>
+    <div class="quantity-display w-10 text-center text-gray-900 font-black text-lg">{{ cart_qty }}</div>
+    <button type="button" 
+            hx-post="{% url 'cart_update' product.id %}" 
+            hx-vals='{"quantity": "{{ cart_qty|add:"1" }}"}'
+            hx-target="#item-total-{{ product.id }}"
+            class="w-10 h-10 flex items-center justify-center text-brown hover:text-gold transition-colors">
+        <i class="fas fa-plus text-xs"></i>
+    </button>
+</div>
+
+<!-- Mobile version target -->
+<div id="cart-stepper-mobile-{{ product.id }}" class="quantity-stepper flex items-center bg-beige/10 rounded-xl border border-beige p-1 w-28 shadow-sm" hx-swap-oob="true">
+    <button type="button" 
+            hx-post="{% url 'cart_update' product.id %}" 
+            hx-vals='{"quantity": "{{ cart_qty|add:"-1" }}"}'
+            hx-target="#item-total-mobile-{{ product.id }}"
+            class="w-8 h-8 flex items-center justify-center text-brown hover:text-gold transition-colors">
+        <i class="fas fa-minus text-[10px]"></i>
+    </button>
+    <div class="quantity-display w-10 text-center text-gray-900 font-black text-base">{{ cart_qty }}</div>
+    <button type="button" 
+            hx-post="{% url 'cart_update' product.id %}" 
+            hx-vals='{"quantity": "{{ cart_qty|add:"1" }}"}'
+            hx-target="#item-total-mobile-{{ product.id }}"
+            class="w-8 h-8 flex items-center justify-center text-brown hover:text-gold transition-colors">
+        <i class="fas fa-plus text-[10px]"></i>
+    </button>
+</div>
+{% endwith %}

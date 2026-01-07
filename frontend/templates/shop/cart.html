@@ -1,22 +1,23 @@
 {% extends "frontend/base.html" %}
-{% load crispy_forms_tags %}
+{% load cart_tags %}
 {% block title %}Your Shopping Cart - Vero{% endblock %}
 
 {% block content %}
-<div class="bg-gray-50 py-12">
+<div class="bg-gray-50 py-8 md:py-12">
     <div class="max-w-7xl mx-auto px-6">
-        <h1 class="text-4xl font-bold mb-8 text-gray-900">Your Shopping Cart</h1>
+        <h1 class="text-4xl font-black mb-8 text-gray-900">Your Shopping Cart</h1>
         
         {% if cart %}
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 <!-- Cart Items -->
                 <div class="lg:col-span-2">
-                    <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-beige/30">
-                        <table class="w-full">
+                    <!-- Desktop Table -->
+                    <div class="hidden md:block bg-white rounded-2xl shadow-sm overflow-hidden border border-beige/30">
+                        <table class="w-full border-collapse">
                             <thead class="bg-gray-900 text-left">
                                 <tr>
-                                    <th class="px-6 py-4 font-bold text-beige">Product</th>
-                                    <th class="px-6 py-4 font-bold text-beige">Quantity</th>
+                                    <th class="px-6 py-4 font-bold text-beige w-1/2">Product</th>
+                                    <th class="px-6 py-4 font-bold text-beige text-center">Quantity</th>
                                     <th class="px-6 py-4 font-bold text-beige text-right">Price</th>
                                     <th class="px-6 py-4 font-bold text-beige text-right">Total</th>
                                 </tr>
@@ -24,72 +25,121 @@
                             <tbody class="divide-y divide-beige/20">
                                 {% for item in cart %}
                                     {% with product=item.product %}
-                                        <tr>
+                                        <tr id="cart-item-{{ product.id }}" class="hover:bg-beige/5 transition-colors">
                                             <td class="px-6 py-6">
-                                                <div class="flex items-center gap-4">
-                                                    <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/100x100?text={{ product.name }}{% endif %}" 
-                                                         alt="{{ product.name }}" class="w-16 h-16 object-cover rounded-lg">
+                                                <div class="flex items-center gap-6">
+                                                    <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-2xl border border-beige/30 bg-beige/10">
+                                                        <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/200x200?text={{ product.name }}{% endif %}" 
+                                                             alt="{{ product.name }}" class="w-full h-full object-cover">
+                                                    </div>
                                                     <div>
-                                                        <h4 class="font-bold text-gray-900">{{ product.name }}</h4>
-                                                        <a href="{% url 'cart_remove' product.id %}" class="text-sm text-brown/50 hover:text-gold transition-colors">Remove</a>
+                                                        <h4 class="font-bold text-gray-900 text-xl">{{ product.name }}</h4>
+                                                        <button hx-post="{% url 'cart_remove' product.id %}"
+                                                                hx-target="#cart-item-{{ product.id }}"
+                                                                hx-swap="outerHTML"
+                                                                hx-confirm="Remove this item?"
+                                                                class="text-sm text-brown/50 hover:text-gold transition-colors font-bold mt-1 flex items-center gap-1">
+                                                            <i class="fas fa-trash-can text-xs"></i> Remove
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-6">
-                                                <form action="{% url 'cart_add' product.id %}" method="post" class="flex items-center">
-                                                    {% csrf_token %}
-                                                    <div class="w-20">
-                                                        {{ item.update_quantity_form.quantity|as_crispy_field }}
-                                                    </div>
-                                                    {{ item.update_quantity_form.override }}
-                                                    <button type="submit" class="ml-2 text-sm text-gold font-bold hover:text-gray-900">Update</button>
-                                                </form>
+                                            <td class="px-6 py-6 text-center">
+                                                <div class="inline-block">
+                                                    {% include "shop/partials/cart_stepper_desktop.html" %}
+                                                </div>
                                             </td>
                                             <td class="px-6 py-6 text-right font-medium text-brown/70">${{ item.price }}</td>
-                                            <td class="px-6 py-6 text-right font-bold text-gray-900">${{ item.total_price }}</td>
+                                            <td class="px-6 py-6 text-right font-bold text-gray-900 text-lg">
+                                                $<span id="item-total-{{ product.id }}">{{ item.total_price }}</span>
+                                            </td>
                                         </tr>
                                     {% endwith %}
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
+
+                    <!-- Mobile Cards -->
+                    <div class="md:hidden space-y-4">
+                        {% for item in cart %}
+                            {% with product=item.product %}
+                            <div id="cart-item-mobile-{{ product.id }}" class="bg-white p-6 rounded-[2rem] border border-beige/30 shadow-sm">
+                                <div class="flex gap-4 mb-4">
+                                    <div class="w-20 h-20 flex-shrink-0 overflow-hidden rounded-xl bg-beige/10">
+                                        <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/200x200?text={{ product.name }}{% endif %}" 
+                                             alt="{{ product.name }}" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="flex-grow">
+                                        <h4 class="font-black text-gray-900 text-lg">{{ product.name }}</h4>
+                                        <div class="text-gold font-bold">${{ item.price }}</div>
+                                        <button hx-post="{% url 'cart_remove' product.id %}"
+                                                hx-target="#cart-item-mobile-{{ product.id }}"
+                                                hx-swap="outerHTML"
+                                                hx-confirm="Remove item?"
+                                                class="text-xs text-brown/40 font-bold uppercase mt-2">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center pt-4 border-t border-beige/20">
+                                    <!-- Mobile Stepper -->
+                                    {% include "shop/partials/cart_stepper_mobile.html" %}
+                                    <div class="font-black text-gray-900">
+                                        $<span id="item-total-mobile-{{ product.id }}">{{ item.total_price }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
                 </div>
 
                 <!-- Summary -->
                 <div class="lg:col-span-1">
                     <div class="bg-white rounded-2xl shadow-sm p-8 border border-beige/30 sticky top-24">
-                        <h2 class="text-2xl font-bold mb-6 text-gray-900">Order Summary</h2>
-                        <div class="space-y-4 mb-8">
-                            <div class="flex justify-between text-lg">
-                                <span class="text-brown/70">Subtotal</span>
-                                <span class="font-bold text-gray-900">${{ cart.get_total_price }}</span>
-                            </div>
-                            <div class="flex justify-between text-lg">
-                                <span class="text-brown/70">Shipping</span>
-                                <span class="font-bold text-green-700">Free</span>
-                            </div>
-                            <div class="border-t border-beige/30 pt-4 flex justify-between text-2xl">
-                                <span class="font-bold text-gray-900">Total</span>
-                                <span class="font-bold text-gold">${{ cart.get_total_price }}</span>
+                        <h2 class="text-2xl font-black mb-6 text-gray-900">Order Summary</h2>
+                        <div id="cart-summary">
+                            <div class="space-y-4 mb-8">
+                                <div class="flex justify-between text-lg">
+                                    <span class="text-brown/70">Subtotal</span>
+                                    <span class="font-bold text-gray-900">${{ cart.get_subtotal }}</span>
+                                </div>
+                                <div class="flex justify-between text-lg">
+                                    <span class="text-brown/70">Shipping</span>
+                                    {% if cart.get_shipping_cost == 0 %}
+                                        <span class="font-bold text-green-700">Free</span>
+                                    {% else %}
+                                        <span class="font-bold text-gray-900">${{ cart.get_shipping_cost }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="flex justify-between text-lg">
+                                    <span class="text-brown/70">HST (13%)</span>
+                                    <span class="font-bold text-gray-900">${{ cart.get_tax }}</span>
+                                </div>
+                                <div class="border-t border-beige/30 pt-4 flex justify-between text-2xl">
+                                    <span class="font-bold text-gray-900">Total</span>
+                                    <span class="font-bold text-gold">${{ cart.get_total_price }}</span>
+                                </div>
                             </div>
                         </div>
                         <a href="{% url 'order_create' %}" 
-                           class="block w-full text-center bg-brown text-beige font-bold py-4 rounded-full hover:bg-gray-900 hover:text-gold transition-all">
+                           class="block w-full text-center bg-brown text-beige font-black py-4 rounded-xl hover:bg-gray-900 hover:text-gold transition-all uppercase tracking-widest text-sm shadow-md">
                             Proceed to Checkout
                         </a>
-                        <a href="{% url 'product_list' %}" class="block w-full text-center mt-4 text-brown/50 font-medium hover:text-gold">
+                        <a href="{% url 'product_list' %}" class="block w-full text-center mt-4 text-brown/50 font-bold hover:text-gold text-sm uppercase tracking-widest">
                             Continue Shopping
                         </a>
                     </div>
                 </div>
             </div>
         {% else %}
-            <div class="bg-white rounded-2xl shadow-sm p-12 text-center border border-beige/30">
+            <div class="bg-white rounded-[2rem] shadow-sm p-12 text-center border border-beige/30">
                 <i class="fas fa-shopping-cart text-6xl text-beige mb-6"></i>
-                <h2 class="text-2xl font-bold text-brown mb-4">Your cart is empty</h2>
-                <p class="text-brown/60 mb-8">Looks like you haven't added anything to your cart yet.</p>
+                <h2 class="text-2xl font-black text-brown mb-4">Your cart is empty</h2>
+                <p class="text-brown/60 mb-8 font-bold">Looks like you haven't added anything to your cart yet.</p>
                 <a href="{% url 'product_list' %}" 
-                   class="inline-block bg-brown text-beige font-bold px-8 py-3 rounded-full hover:bg-gray-900 hover:text-gold transition-all">
+                   class="inline-block bg-brown text-beige font-black px-10 py-4 rounded-xl hover:bg-gray-900 hover:text-gold transition-all uppercase tracking-widest text-sm shadow-md">
                     Start Shopping
                 </a>
             </div>

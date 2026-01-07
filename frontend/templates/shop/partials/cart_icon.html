@@ -1,0 +1,20 @@
+<a href="{% url 'cart_detail' %}" class="text-brown hover:text-gold relative" id="cart-icon-nav" hx-swap-oob="true">
+    <i class="fas fa-shopping-cart text-2xl"></i>
+    {% with total_items=cart|length %}
+        {% if total_items > 0 %}
+            <span class="absolute -top-2 -right-3 bg-gold text-brown rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold">{{ total_items }}</span>
+        {% endif %}
+    {% endwith %}
+</a>
+
+<a href="{% url 'cart_detail' %}" class="flex flex-col items-center justify-center text-brown hover:text-gold transition-colors h-full relative" id="cart-icon-mobile" hx-swap-oob="true">
+    <div class="relative">
+        <i class="fas fa-shopping-bag text-lg mb-1"></i>
+        {% with total_items=cart|length %}
+            {% if total_items > 0 %}
+                <span class="absolute -top-2 -right-2 bg-gold text-gray-900 rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-black border border-white">{{ total_items }}</span>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <span class="text-[10px] font-bold uppercase tracking-wide">Cart</span>
+</a>

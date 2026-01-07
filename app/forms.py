@@ -1,4 +1,5 @@
 from django import forms
+from django.db import models
 from django.contrib.auth.models import User
 from .models import Profile, Order
 
@@ -33,5 +34,5 @@ class ProfileEditForm(forms.ModelForm):
 class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'email', 'address', 'postal_code', 'city']
+        fields = ['first_name', 'last_name', 'email', 'address', 'postal_code', 'city', 'country']
 

@@ -3,50 +3,164 @@
 {% block title %}{{ product.name }} - Vero{% endblock %}
 
 {% block content %}
-<div class="bg-white py-12">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="flex flex-col md:flex-row gap-12">
-            <!-- Product Image -->
-            <div class="w-full md:w-1/2">
-                <div class="relative aspect-square overflow-hidden rounded-3xl bg-beige/10 border border-beige/50 shadow-inner">
-                    <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/800x800?text={{ product.name }}{% endif %}" 
-                         alt="{{ product.name }}" class="w-full h-full object-cover">
+<div class="bg-white">
+    <!-- Main Product Section -->
+    <div class="max-w-7xl mx-auto px-6 py-10 md:py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start">
+            
+            <!-- Left: Image Gallery -->
+            <div class="space-y-6 w-full max-w-xl mx-auto lg:mx-0">
+                <div class="aspect-square w-full bg-beige/10 rounded-[2.5rem] overflow-hidden border border-beige/40 shadow-inner group">
+                    <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/1000x1000?text={{ product.name }}{% endif %}" 
+                         alt="{{ product.name }}" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                </div>
+                <!-- Mini Gallery Placeholder -->
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="aspect-square bg-beige/20 rounded-2xl border-2 border-gold/30 cursor-pointer"></div>
+                    <div class="aspect-square bg-beige/10 rounded-2xl border border-beige/30 cursor-pointer"></div>
                 </div>
             </div>
 
-            <!-- Product Info -->
-            <div class="w-full md:w-1/2 flex flex-col justify-center">
-                <nav class="mb-6 text-sm font-bold">
-                    <a href="{% url 'product_list' %}" class="hover:text-gold text-brown/60 transition-colors">Shop</a> 
-                    <span class="mx-2 text-beige">/</span>
-                    <a href="{% url 'product_list_by_category' product.category.slug %}" class="hover:text-gold text-brown/60 transition-colors">{{ product.category.name }}</a>
+            <!-- Right: Product Information -->
+            <div class="flex flex-col">
+                <nav class="flex items-center gap-2 mb-6 flex-wrap">
+                    <a href="{% url 'product_list' %}" class="text-brown/50 hover:text-gold font-bold transition-colors">Shop</a>
+                    <i class="fas fa-chevron-right text-[10px] text-beige"></i>
+                    <a href="{% url 'product_list_by_category' product.category.slug %}" class="text-brown/50 hover:text-gold font-bold transition-colors">{{ product.category.name }}</a>
+                    <i class="fas fa-chevron-right text-[10px] text-beige"></i>
+                    <span class="text-brown font-black">{{ product.name }}</span>
                 </nav>
-                <h1 class="text-6xl font-bold mb-6 text-gray-900 leading-tight">{{ product.name }}</h1>
-                <p class="text-4xl font-bold text-gold mb-10">${{ product.price }}</p>
-                <div class="prose max-w-none mb-12 text-brown text-lg leading-relaxed">
+
+                <h1 class="text-3xl md:text-5xl font-black text-gray-900 leading-tight mb-4">
+                    {{ product.name }}
+                </h1>
+
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="flex text-gold text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <span class="text-brown/50 font-bold text-sm underline decoration-gold/30">{{ reviews.count }} Reviews</span>
+                </div>
+
+                <div class="text-3xl md:text-4xl font-black text-gold mb-8">
+                    ${{ product.price }}
+                </div>
+
+                <div class="prose prose-base md:prose-lg text-brown/80 mb-8 font-medium leading-relaxed">
                     {{ product.description|linebreaks }}
                 </div>
 
-                <div class="bg-gray-900 p-8 rounded-3xl shadow-xl border border-gold/20">
-                    <form action="{% url 'cart_add' product.id %}" method="post">
-                        {% csrf_token %}
-                        <div class="flex flex-col sm:flex-row items-end gap-6">
-                            <div class="w-full sm:w-32">
-                                <label class="block text-beige text-xs font-bold uppercase tracking-wider mb-2">Quantity</label>
-                                <div class="text-beige">
-                                    {{ cart_product_form.quantity|as_crispy_field }}
-                                </div>
-                            </div>
-                            <div class="hidden">
-                                {{ cart_product_form.override }}
-                            </div>
-                            <button type="submit" class="flex-1 w-full bg-gold text-gray-900 font-black py-5 px-8 rounded-2xl hover:bg-white hover:text-gray-900 transition-all duration-300 shadow-lg text-lg uppercase tracking-widest">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </form>
+                <!-- Purchase Card -->
+                <div class="bg-gray-900 rounded-[2rem] p-6 md:p-8 shadow-2xl border border-gold/10 max-w-lg">
+                    {% include "shop/partials/purchase_button.html" %}
+                    <div class="mt-6 flex justify-center gap-6 text-beige/40 text-[9px] font-black uppercase tracking-widest">
+                        <span class="flex items-center gap-2"><i class="fas fa-truck text-gold/50"></i> Free Over $50</span>
+                        <span class="flex items-center gap-2"><i class="fas fa-leaf text-gold/50"></i> 100% Organic</span>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="bg-beige/20 py-12 md:py-16 border-y border-beige/40">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+            <div class="text-center">
+                <i class="fas fa-heart text-4xl text-gold mb-6"></i>
+                <h3 class="text-2xl font-black text-gray-900 mb-4">Honest Ingredients</h3>
+                <p class="text-brown/70 font-medium">No hidden sugars, no artificial additives. Just pure nature.</p>
+            </div>
+            <div class="text-center border-x-0 md:border-x border-beige/40 px-0 md:px-12">
+                <i class="fas fa-bolt text-4xl text-gold mb-6"></i>
+                <h3 class="text-2xl font-black text-gray-900 mb-4">Clean Energy</h3>
+                <p class="text-brown/70 font-medium">Perfect for pre-workout or a healthy midday boost.</p>
+            </div>
+            <div class="text-center">
+                <i class="fas fa-earth-americas text-4xl text-gold mb-6"></i>
+                <h3 class="text-2xl font-black text-gray-900 mb-4">Ethically Sourced</h3>
+                <p class="text-brown/70 font-medium">Supporting local farmers and sustainable practices.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div id="reviews" class="max-w-4xl mx-auto px-6 py-16 md:py-20">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6 text-center md:text-left">
+            <div>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4">Real Feedback</h2>
+                <p class="text-brown/60 font-bold">Hear what our community thinks about our {{ product.name }}.</p>
+            </div>
+            <div class="text-right">
+                <div class="text-4xl font-black text-gray-900">4.9</div>
+                <div class="text-gold"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            </div>
+        </div>
+
+        <!-- Review Form -->
+        {% if request.user.is_authenticated %}
+            {% if can_review %}
+                <div class="bg-white rounded-[2rem] p-8 md:p-10 border-2 border-beige mb-12 shadow-sm">
+                    <h3 class="text-2xl font-black text-gray-900 mb-6">Leave a Review</h3>
+                    <form action="{% url 'add_review' product.id %}" method="post" class="space-y-6">
+                        {% csrf_token %}
+                        <div>
+                            <label class="block text-brown font-black mb-2 uppercase text-xs tracking-widest">Rating</label>
+                            <select name="rating" class="bg-beige/10 border-2 border-beige rounded-xl p-3 w-full font-bold focus:border-gold outline-none cursor-pointer">
+                                <option value="5">5 Stars - Perfection</option>
+                                <option value="4">4 Stars - Great</option>
+                                <option value="3">3 Stars - Good</option>
+                                <option value="2">2 Stars - Okay</option>
+                                <option value="1">1 Star - Not for me</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-brown font-black mb-2 uppercase text-xs tracking-widest">Your Thoughts</label>
+                            <textarea name="comment" rows="4" class="bg-beige/10 border-2 border-beige rounded-xl p-4 w-full font-bold focus:border-gold outline-none" placeholder="What did you love about these?"></textarea>
+                        </div>
+                        <button type="submit" class="bg-brown text-beige font-black px-10 py-4 rounded-xl hover:bg-gray-900 hover:text-gold transition-all uppercase tracking-widest text-sm">
+                            Post Review
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="bg-beige/10 rounded-[2rem] p-8 text-center border border-dashed border-beige mb-12">
+                    <p class="text-brown/60 font-bold">
+                        <i class="fas fa-lock mr-2 text-gold/50"></i>
+                        Only verified buyers can leave a review. Order these snacks to share your thoughts!
+                    </p>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="bg-beige/10 rounded-[2rem] p-8 text-center border border-dashed border-beige mb-12">
+                <p class="text-brown/60 font-bold">Please <a href="{% url 'login' %}" class="text-gold underline">login</a> to leave a review.</p>
+            </div>
+        {% endif %}
+
+        <!-- Reviews List -->
+        <div class="space-y-10">
+            {% for review in reviews %}
+            <div class="border-b border-beige pb-10">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <div class="font-black text-gray-900 text-xl">{{ review.user.username }}</div>
+                        <div class="text-brown/40 text-sm font-bold">{{ review.created|date:"M d, Y" }}</div>
+                    </div>
+                    <div class="text-gold">
+                        {% for i in "12345"|make_list %}
+                            {% if forloop.counter <= review.rating %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="text-brown/80 font-medium text-lg leading-relaxed">{{ review.comment }}</p>
+            </div>
+            {% empty %}
+            <p class="text-center text-brown/40 font-bold py-10">Be the first to review this product!</p>
+            {% endfor %}
         </div>
     </div>
 </div>

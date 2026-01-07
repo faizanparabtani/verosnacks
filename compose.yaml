@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: verosnacks
+      POSTGRES_USER: vero_user
+      POSTGRES_PASSWORD: vero_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    expose:
+      - 6379
+
+  web:
+    build: .
+    command: uv run python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=dev_key_only
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=postgres://vero_user:vero_password@db:5432/verosnacks
+      - UV_PROJECT_ENVIRONMENT=/venv
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+    depends_on:
+      - db
+      - redis
+
+  worker:
+    build: .
+    command: uv run celery -a verosnacks worker -l info
+    volumes:
+      - .:/code
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - UV_PROJECT_ENVIRONMENT=/venv
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data:

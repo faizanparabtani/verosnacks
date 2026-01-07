@@ -2,73 +2,94 @@
 {% load static %}
 {% block title %}Vero Snacks{% endblock %}
 {% block content %}
-<section class="relative overflow-hidden bg-white">
+<section class="relative overflow-hidden bg-linear-to-br from-amber-50 via-orange-50 to-amber-100">
   <div class="relative w-full">
-    <div class="offer-swiper swiper h-12">
+    <div class="h-44 offer-swiper swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide flex justify-center items-center">
-                <p class="offer-paragraph">
-                    Free shipping over $50
-                </p>
+            <div class="swiper-slide">
+                <p class="text-md md:text-2xl font-black bg-gray-900 text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">Free shipping over $50</p>
             </div>
-            <div class="swiper-slide flex justify-center items-center">
-                <p class="offer-paragraph">
-                    New holiday flavors now available!!
-                </p>
+            <div class="swiper-slide">
+                <p class="text-md md:text-2xl font-black bg-gray-900 text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">New holiday flavors now available!!</p>
             </div>
-            <div class="swiper-slide flex justify-center items-center">
-                <p class="offer-paragraph">
-                    10% off your first order
-                </p>
+            <div class="swiper-slide">
+                <p class="text-md md:text-2xl font-black bg-gray-900 text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">10% off your first order</p>
             </div>
-            <div class="swiper-slide flex justify-center items-center">
-                <p class="offer-paragraph">
-                    Only Real Ingredients — No Compromises
-                </p>
+            <div class="swiper-slide">
+                <p class="text-md md:text-2xl font-black bg-gray-900 text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">Only Real Ingredients — No Compromises</p>
             </div>
         </div>
     </div>
   </div>
-  <div class="container">
-    <div class="w-full lg:w-1/2">
-      <p class="text-5xl text-gray-900 mb-8 whitespace-nowrap">
-        Nature’s Ingredients,<br><span class="text-gold">Nothing Hidden.</span><br>
+  
+  <div class="max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12">
+    <div class="w-full lg:w-1/2 text-center lg:text-left mt-4 lg:mt-0">
+      <p class="text-4xl md:text-5xl font-black text-gray-900 mb-4 leading-tight">
+        Nature’s Ingredients,<br><span class="text-gold">Nothing Hidden.</span>
       </p>
-      <div class="container">
-        <div class="text-gold flex-col items-center justify-center space-y-3">
-          <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766283445/K_y1iujt.png" class="w-auto h-36 object-cover rounded-xl" alt="">
-          <p class="font-semibold text-3xl">Bars</p>
+      
+      <div class="flex flex-wrap justify-center lg:justify-start gap-4 md:gap-6 mb-8 lg:mb-0">
+        <!-- Bars -->
+        <div class="flex flex-col items-center gap-3 group cursor-pointer">
+          <div class="w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden transition-all duration-300">
+            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766283445/K_y1iujt.png" 
+                 class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" alt="Bars">
+          </div>
+          <p class="font-black text-lg md:text-xl text-brown group-hover:text-gold transition-colors">Bars</p>
         </div>
-        <div class="text-gold flex items-center space-y-3">
-          <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766341170/truffle_m7sy1k.webp" class="w-auto h-48 object-cover rounded-xl" alt="">
-          <p class="font-semibold">Truffles</p>
+
+        <!-- Truffles -->
+        <div class="flex flex-col items-center gap-3 group cursor-pointer">
+          <div class="w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden transition-all duration-300">
+            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766341170/truffle_m7sy1k.webp" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Truffles">
+          </div>
+          <p class="font-black text-lg md:text-xl text-brown group-hover:text-gold transition-colors">Truffles</p>
         </div>
-        <div class="text-gold flex items-center space-y-3">
-          <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766342334/Gemini_Generated_Image_avzif2avzif2avzi-1_d9inhg.webp" class="w-auto h-48 object-cover rounded-xl" alt="">
-          <p class="font-semibold">Chips</p>
+
+        <!-- Chips -->
+        <div class="flex flex-col items-center gap-3 group cursor-pointer">
+          <div class="w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden transition-all duration-300">
+            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766342334/Gemini_Generated_Image_avzif2avzif2avzi-1_d9inhg.webp" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Chips">
+          </div>
+          <p class="font-black text-lg md:text-xl text-brown group-hover:text-gold transition-colors">Chips</p>
         </div>
       </div>
-      <!-- <div class="flex space-x-4"> -->
-      <!--   <a href="#" class="btn-custom"> -->
-      <!--     Shop Now -->
-      <!--   </a> -->
-      <!--   <a href="#" class="btn-custom"> -->
-      <!--     How we do it -->
-      <!--   </a> -->
-      <!-- </div> -->
     </div>
-    <!-- Floating elements -->
-    <div class="w-full lg:w-1/2">
-      <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766340996/Gemini_Generated_Image_vxajjzvxajjzvxaj-1_i05oqn.webp" 
-           class="w-full max-w-lg mx-auto drop-shadow-xl rounded-xl object-cover slow-bounce"
-           alt="Floating elements">
+    <!-- Floating elements (Tighter grouping) -->
+    <div class="w-full lg:w-1/2 relative h-[450px] mt-8 lg:mt-0 flex items-center justify-center">
+      <!-- Chips Floating (Center Base) -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 md:w-72 z-10 animate-slow-bounce-slower">
+        <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766342334/Gemini_Generated_Image_avzif2avzif2avzi-1_d9inhg.webp" 
+             class="w-full h-auto drop-shadow-2xl rounded-3xl object-cover rotate-3"
+             alt="Floating Chips">
+      </div>
+
+      <!-- Bars Floating (Tighter to bottom left of chips) -->
+      <div class="absolute bottom-12 left-4 md:left-16 w-36 md:w-52 z-30 animate-slow-bounce">
+        <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766283445/K_y1iujt.png" 
+             class="w-full h-auto drop-shadow-2xl rounded-3xl object-cover -rotate-12"
+             alt="Floating Bars">
+      </div>
+      
+      <!-- Truffles Floating (Repositioned) -->
+      <div class="absolute bottom-24 right-0 md:right-4 w-36 md:w-52 z-20 animate-slow-bounce-delayed">
+        <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766341170/truffle_m7sy1k.webp" 
+             class="w-full h-auto drop-shadow-2xl rounded-3xl object-cover rotate-12"
+             alt="Floating Truffles">
+      </div>
+
+      <!-- Decorative Gold Blob -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gold/15 rounded-full blur-3xl -z-10"></div>
     </div>
   </div>
 </section>
-<section class="bg-gray-900 py-10">
+
+<section class="bg-gray-900 py-12 md:py-16">
   <div class="max-w-6xl mx-auto px-6 text-center">
-    <h2 class="text-3xl text-gold md:text-5xl font-extrabold mb-6">We choose transparency.</h2>
-    <p class="text-white text-xl max-w-2xl mx-auto mb-12">
+    <h2 class="text-3xl text-gold md:text-5xl font-extrabold mb-4">We choose transparency</h2>
+    <p class="text-white text-lg max-w-2xl mx-auto mb-8">
       Every ingredient we use is listed clearly, openly, and without disguises.  
       No confusing labels. No artificial gimmicks. Just real food.
     </p>
@@ -77,43 +98,57 @@
          alt="Ingredient board">
   </div>
 </section>
-<section class="py-24 bg-beige/30">
+
+<section class="py-16 bg-beige/30">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+    <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-10 gap-4 text-center md:text-left">
         <div>
-            <h2 class="text-5xl font-bold text-gray-900 mb-4">Our Best Sellers</h2>
-            <p class="text-brown text-xl max-w-lg">Hand-crafted with integrity, loved by our community. Discover the flavors that started it all.</p>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-2">Our Best Sellers</h2>
+            <p class="text-brown text-lg max-w-lg">Hand-crafted with integrity, loved by our community.</p>
         </div>
-        <a href="{% url 'product_list' %}" class="text-gold font-bold text-lg hover:text-gray-900 transition-colors flex items-center gap-2">
-            View All Snacks <i class="fas fa-arrow-right text-sm"></i>
+        <a href="{% url 'product_list' %}" class="bg-beige text-brown font-black px-6 py-3 rounded-full border-2 border-brown hover:bg-brown hover:text-beige transition-all flex items-center gap-2">
+            View All <i class="fas fa-arrow-right text-sm"></i>
         </a>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {% for product in products %}
-      <div class="group relative bg-white rounded-3xl p-4 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-beige/50">
+      <div class="group flex flex-col h-full bg-linear-to-br from-amber-50 via-orange-50 to-amber-100 rounded-4xl p-5 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(61,23,0,0.1)] border border-beige/60 relative">
         <!-- Image Container -->
-        <div class="relative aspect-square overflow-hidden rounded-2xl bg-beige/20 mb-6">
-          <a href="{% url 'product_detail' product.id product.slug %}">
+        <div class="relative aspect-square overflow-hidden rounded-3xl bg-beige/10 mb-6 shrink-0">
+          <a href="{% url 'product_detail' product.id product.slug %}" class="block w-full h-full">
             <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/600x600?text={{ product.name }}{% endif %}" 
-                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                  alt="{{ product.name }}">
           </a>
-          <!-- Price Tag -->
-          <div class="absolute top-4 right-4 bg-gray-900 text-gold font-bold px-4 py-2 rounded-full shadow-lg">
-            ${{ product.price }}
+          <!-- Floating Badge -->
+          <div class="absolute top-4 left-4">
+             <span class="bg-gray-900/90 backdrop-blur-md text-gold text-xs font-black px-3 py-1.5 rounded-full tracking-widest uppercase">
+                Best Seller
+             </span>
           </div>
         </div>
 
-        <!-- Content -->
-        <div class="px-2 pb-2">
-          <h3 class="text-2xl font-bold text-gray-900 mb-2 group-hover:text-gold transition-colors">{{ product.name }}</h3>
-          <p class="text-brown/70 text-sm mb-6 line-clamp-2">Real ingredients, real taste. No compromises on nutrition.</p>
+        <!-- Content Area -->
+        <div class="flex flex-col grow px-1">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-2xl font-black text-gray-900 leading-tight group-hover:text-gold transition-colors duration-300">
+                {{ product.name }}
+            </h3>
+          </div>
           
-          <a href="{% url 'product_detail' product.id product.slug %}" 
-             class="block w-full text-center py-4 bg-brown text-beige font-bold rounded-xl group-hover:bg-gray-900 group-hover:text-gold transition-all duration-300">
-            View Details
-          </a>
+          <p class="text-brown text-base leading-relaxed mb-6 line-clamp-2 font-medium">
+            {{ product.description }}
+          </p>
+
+          <!-- Bottom Action Area -->
+          <div class="mt-auto pt-4 flex flex-col gap-4 border-t border-beige/30">
+            <div class="flex items-center justify-between">
+                <span class="text-2xl font-black text-gray-900">${{ product.price }}</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-brown/40">Unit Price</span>
+            </div>
+            {% include "shop/partials/purchase_button.html" %}
+          </div>
         </div>
       </div>
       {% empty %}
@@ -124,14 +159,47 @@
     </div>
   </div>
 </section>
-<section class="bg-white py-16 text-white text-center">
+
+<!-- Testimonials Section -->
+<section class="bg-gray-900 py-16 overflow-hidden relative">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl -mr-48 -mt-48"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-beige/5 rounded-full blur-3xl -ml-48 -mb-48"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-black text-beige mb-4">Loved by the Community</h2>
+            <p class="text-gold font-bold text-lg uppercase tracking-widest">Real feedback from real snackers</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for t in testimonials %}
+            <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-10 rounded-[2.5rem] relative group hover:bg-white/10 transition-all duration-500">
+                <i class="fas fa-quote-left text-gold/20 text-6xl absolute top-8 left-8"></i>
+                <div class="relative z-10">
+                    <p class="text-beige text-lg font-medium leading-relaxed mb-8 italic">
+                        "{{ t.text }}"
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div>
+                            <div class="text-beige font-black text-lg">{{ t.name }}</div>
+                            <div class="text-gold/60 text-sm font-bold">{{ t.role }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="bg-linear-to-br from-amber-50 via-orange-50 to-amber-100 py-16 text-white text-center">
   <div class="max-w-4xl mx-auto px-6 space-y-6">
     <h2 class="text-3xl font-bold text-brown">No secrets. No shortcuts.</h2>
     <p class="text-brown text-2xl">
       Our promise is simple: delicious snacks made with integrity.  
       Nothing more. Nothing less.
     </p>
-    <a href="{% url 'product_list' %}" class="inline-block bg-brown text-beige font-bold px-8 py-4 rounded-full hover:bg-gray-900 hover:text-gold transition-all">
+    <a href="{% url 'product_list' %}" class="inline-block bg-brown text-beige font-black px-8 py-4 rounded-full hover:bg-gray-900 hover:text-gold transition-all">
       Explore Our Snacks
     </a>
   </div>

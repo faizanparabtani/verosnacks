@@ -1,0 +1,24 @@
+<div id="cart-summary" hx-swap-oob="true">
+    <div class="space-y-4 mb-8">
+        <div class="flex justify-between text-lg">
+            <span class="text-brown/70">Subtotal</span>
+            <span class="font-bold text-gray-900">${{ cart.get_subtotal }}</span>
+        </div>
+        <div class="flex justify-between text-lg">
+            <span class="text-brown/70">Shipping</span>
+            {% if cart.get_shipping_cost == 0 %}
+                <span class="font-bold text-green-700">Free</span>
+            {% else %}
+                <span class="font-bold text-gray-900">${{ cart.get_shipping_cost }}</span>
+            {% endif %}
+        </div>
+        <div class="flex justify-between text-lg">
+            <span class="text-brown/70">HST (13%)</span>
+            <span class="font-bold text-gray-900">${{ cart.get_tax }}</span>
+        </div>
+        <div class="border-t border-beige/30 pt-4 flex justify-between text-2xl">
+            <span class="font-bold text-gray-900">Total</span>
+            <span class="font-bold text-gold">${{ cart.get_total_price }}</span>
+        </div>
+    </div>
+</div>

@@ -5,38 +5,38 @@
 {% block content %}
 <div class="bg-gray-50 py-12">
     <div class="max-w-7xl mx-auto px-6">
-        <h1 class="text-4xl font-bold mb-8 text-gray-900">Checkout</h1>
+        <h1 class="text-4xl md:text-5xl font-black mb-10 text-gray-900">Checkout</h1>
         
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
             <!-- Checkout Form -->
-            <div class="lg:col-span-2">
-                <div class="bg-white rounded-2xl shadow-sm p-8 border border-beige/30">
-                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Shipping Information</h2>
+            <div class="lg:col-span-2 order-2 lg:order-1">
+                <div class="bg-white rounded-[2rem] p-6 md:p-10 border border-beige/30 shadow-sm">
+                    <h2 class="text-2xl md:text-3xl font-black mb-8 text-gray-900">Shipping Information</h2>
                     <form method="post" action="." class="space-y-6 text-brown">
                         {% csrf_token %}
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-brown font-bold">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-brown font-black">
                             {{ form.first_name|as_crispy_field }}
                             {{ form.last_name|as_crispy_field }}
                         </div>
-                        <div class="text-brown font-bold">
+                        <div class="text-brown font-black space-y-6">
                             {{ form.email|as_crispy_field }}
                             {{ form.address|as_crispy_field }}
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-brown font-bold">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-brown font-black">
                             {{ form.city|as_crispy_field }}
                             {{ form.postal_code|as_crispy_field }}
                         </div>
-                        <button type="submit" class="w-full bg-brown text-beige font-bold py-4 rounded-full hover:bg-gray-900 hover:text-gold transition-all mt-6">
-                            Continue to Payment
+                        <button type="submit" class="w-full bg-brown text-beige font-black py-5 rounded-2xl hover:bg-gray-900 hover:text-gold transition-all mt-8 uppercase tracking-widest">
+                            Continue to Payment <i class="fas fa-arrow-right ml-2 text-sm"></i>
                         </button>
                     </form>
                 </div>
             </div>
 
             <!-- Order Summary Sidebar -->
-            <div class="lg:col-span-1">
-                <div class="bg-white rounded-2xl shadow-sm p-8 border border-beige/30 sticky top-24">
-                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Order Summary</h2>
+            <div class="lg:col-span-1 order-1 lg:order-2">
+                <div class="bg-white rounded-[2rem] p-8 border border-beige/30 lg:sticky lg:top-24 shadow-sm">
+                    <h2 class="text-2xl font-black mb-8 text-gray-900">Order Summary</h2>
                     <div class="space-y-4 mb-6">
                         {% for item in cart %}
                             <div class="flex justify-between items-center text-sm">
@@ -45,9 +45,27 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="border-t border-beige/30 pt-4 flex justify-between text-2xl">
-                        <span class="font-bold text-gray-900">Total</span>
-                        <span class="font-bold text-gold">${{ cart.get_total_price }}</span>
+                    <div class="border-t border-beige/30 pt-6 space-y-3">
+                        <div class="flex justify-between text-base">
+                            <span class="text-brown/70 font-bold">Subtotal</span>
+                            <span class="font-black text-gray-900">${{ cart.get_subtotal }}</span>
+                        </div>
+                        <div class="flex justify-between text-base">
+                            <span class="text-brown/70 font-bold">Shipping</span>
+                            {% if cart.get_shipping_cost == 0 %}
+                                <span class="font-black text-green-700">Free</span>
+                            {% else %}
+                                <span class="font-black text-gray-900">${{ cart.get_shipping_cost }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="flex justify-between text-base">
+                            <span class="text-brown/70 font-bold">HST (13%)</span>
+                            <span class="font-black text-gray-900">${{ cart.get_tax }}</span>
+                        </div>
+                        <div class="flex justify-between text-2xl pt-4 border-t border-beige/30">
+                            <span class="font-black text-gray-900">Total</span>
+                            <span class="font-black text-gold">${{ cart.get_total_price }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
