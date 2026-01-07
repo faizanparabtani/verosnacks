@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -o errexit
 
+# Source the virtual environment
+source /opt/venv/bin/activate
+
 # Ensure uv is available
 if ! command -v uv &> /dev/null; then
     echo "uv not found, installing..."
