@@ -1,0 +1,16 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "./build.sh",
+    "nixpacksPlan": {
+      "phases": {
+        "setup": {
+          "nixPkgs": ["nodejs", "python313", "uv"]
+        }
+      }
+    }
+  },
+  "deploy": {
+    "startCommand": "uv run gunicorn verosnacks.wsgi:application --bind 0.0.0.0:$PORT"
+  }
+}
