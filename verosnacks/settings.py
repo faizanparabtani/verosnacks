@@ -13,6 +13,12 @@ DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 RAILWAY_PUBLIC_DOMAIN = os.environ.get("RAILWAY_PUBLIC_DOMAIN")
 if RAILWAY_PUBLIC_DOMAIN:
+    # Strip protocol if present to avoid duplication
+    if RAILWAY_PUBLIC_DOMAIN.startswith("https://"):
+        RAILWAY_PUBLIC_DOMAIN = RAILWAY_PUBLIC_DOMAIN[8:]
+    elif RAILWAY_PUBLIC_DOMAIN.startswith("http://"):
+        RAILWAY_PUBLIC_DOMAIN = RAILWAY_PUBLIC_DOMAIN[7:]
+
     ALLOWED_HOSTS = [RAILWAY_PUBLIC_DOMAIN]
     CSRF_TRUSTED_ORIGINS = [f"https://{RAILWAY_PUBLIC_DOMAIN}"]
 else:
@@ -103,15 +109,15 @@ WSGI_APPLICATION = "verosnacks.wsgi.application"
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        engine="django_prometheus.db.backends.sqlite3"
+        engine="django.db.backends.sqlite3"
         if "postgres" not in os.environ.get("DATABASE_URL", "")
-        else "django_prometheus.db.backends.postgresql",
+        else "django.db.backends.postgresql",
     )
 }
 
 # Ensure Postgres engine is correct for prometheus if using DATABASE_URL
 if os.environ.get("DATABASE_URL"):
-    DATABASES["default"]["ENGINE"] = "django_prometheus.db.backends.postgresql"
+    DATABASES["default"]["ENGINE"] = "django.db.backends.postgresql"
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -153,9 +159,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Cloudinary
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME") or os.environ.get("CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY") or os.environ.get("API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET") or os.environ.get("API_SECRET"),
 }
 
 # Celery
