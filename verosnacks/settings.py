@@ -11,9 +11,13 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = [os.environ.get("RAILWAY_PUBLIC_DOMAIN")]
-
-CSRF_TRUSTED_ORIGINS = ["https://" + os.environ.get("RAILWAY_PUBLIC_DOMAIN")]
+RAILWAY_PUBLIC_DOMAIN = os.environ.get("RAILWAY_PUBLIC_DOMAIN")
+if RAILWAY_PUBLIC_DOMAIN:
+    ALLOWED_HOSTS = [RAILWAY_PUBLIC_DOMAIN]
+    CSRF_TRUSTED_ORIGINS = [f"https://{RAILWAY_PUBLIC_DOMAIN}"]
+else:
+    ALLOWED_HOSTS = ["*"]
+    CSRF_TRUSTED_ORIGINS = []
 
 # Security Hardening
 if not DEBUG:
