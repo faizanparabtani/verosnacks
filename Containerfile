@@ -48,13 +48,7 @@ RUN uv sync --frozen --no-dev
 COPY --from=frontend-builder /app/frontend/static/css/dist/styles.css /code/frontend/static/css/dist/styles.css
 
 # Run collectstatic (using dummy secrets to bypass runtime checks)
-RUN SECRET_KEY=dummy \
-    DEBUG=False \
-    DATABASE_URL=sqlite:///db.sqlite3 \
-    CLOUDINARY_CLOUD_NAME=dummy \
-    CLOUDINARY_API_KEY=dummy \
-    CLOUDINARY_API_SECRET=dummy \
-    uv run python manage.py collectstatic --noinput
+RUN uv run python manage.py collectstatic --noinput
 
 # Expose port
 EXPOSE 8000
