@@ -35,7 +35,6 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 # Install Python dependencies
 COPY pyproject.toml uv.lock ./
-# We use --frozen to respect the lockfile exactly
 RUN uv sync --frozen --no-dev --no-install-project
 
 # Copy project files
@@ -47,7 +46,6 @@ RUN uv sync --frozen --no-dev
 # Copy built frontend assets from builder
 COPY --from=frontend-builder /app/frontend/static/css/dist/styles.css /code/frontend/static/css/dist/styles.css
 
-# Run collectstatic (using dummy secrets to bypass runtime checks)
 RUN uv run python manage.py collectstatic --noinput
 
 # Expose port
