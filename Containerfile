@@ -46,7 +46,7 @@ RUN uv sync --frozen --no-dev
 # Copy built frontend assets from builder
 COPY --from=frontend-builder /app/frontend/static/css/dist/styles.css /code/frontend/static/css/dist/styles.css
 
-RUN uv run python manage.py collectstatic --noinput
+RUN SECRET_KEY=dummy uv run python manage.py collectstatic --noinput
 
 # Expose port
 EXPOSE 8000

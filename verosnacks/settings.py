@@ -105,14 +105,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+if DEBUG:
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": os.environ.get("CLOUD_NAME"),
@@ -122,7 +135,10 @@ CLOUDINARY_STORAGE = {
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "frontend/static")]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "frontend/static"),
+    os.path.join(BASE_DIR, "frontend/static_src/src"),
+]
 
 
 # Standard Settings
