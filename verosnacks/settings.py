@@ -1,50 +1,18 @@
 import os
+from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
-from pathlib import Path
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load env var
-load_dotenv()
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = os.environ.get("DEBUG", "False") == "True"
-
-RAILWAY_PUBLIC_DOMAIN = os.environ.get("RAILWAY_PUBLIC_DOMAIN")
-if RAILWAY_PUBLIC_DOMAIN:
-    # Strip protocol if present to avoid duplication
-    if RAILWAY_PUBLIC_DOMAIN.startswith("https://"):
-        RAILWAY_PUBLIC_DOMAIN = RAILWAY_PUBLIC_DOMAIN[8:]
-    elif RAILWAY_PUBLIC_DOMAIN.startswith("http://"):
-        RAILWAY_PUBLIC_DOMAIN = RAILWAY_PUBLIC_DOMAIN[7:]
-
-    ALLOWED_HOSTS = [RAILWAY_PUBLIC_DOMAIN]
-    CSRF_TRUSTED_ORIGINS = [f"https://{RAILWAY_PUBLIC_DOMAIN}"]
-else:
-    ALLOWED_HOSTS = ["*"]
-    CSRF_TRUSTED_ORIGINS = []
-
-# Security Hardening
-if not DEBUG:
-    # SSL/HTTPS
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 31536000  # 1 year
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-
-    # Headers
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    SECURE_BROWSER_XSS_FILTER = True
-    X_FRAME_OPTIONS = "DENY"
-    SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
-    SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+DEBUG = True
+ALLOWED_HOSTS = []
 
 # Application definition
-
 INSTALLED_APPS = [
     "django_prometheus",
     "django.contrib.admin",
@@ -62,8 +30,6 @@ INSTALLED_APPS = [
     "crispy_tailwind",
 ]
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
-CRISPY_TEMPLATE_PACK = "tailwind"
 
 if DEBUG:
     INSTALLED_APPS += ["django_browser_reload"]
@@ -106,18 +72,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "verosnacks.wsgi.application"
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        engine="django.db.backends.sqlite3"
-        if "postgres" not in os.environ.get("DATABASE_URL", "")
-        else "django.db.backends.postgresql",
-    )
-}
-
-# Ensure Postgres engine is correct for prometheus if using DATABASE_URL
-if os.environ.get("DATABASE_URL"):
-    DATABASES["default"]["ENGINE"] = "django.db.backends.postgresql"
+POSTGRESS_LOCALLY = True
+if POSTGRESS_LOCALLY:
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=os.environ.get("DATABASE_URL"),
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -135,34 +105,40 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
-LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_TZ = True
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUD_NAME"),
+    "API_KEY": os.environ.get("API_KEY"),
+    "API_SECRET": os.environ.get("API_SECRET"),
+}
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "frontend/static")]
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/static"),
-    os.path.join(BASE_DIR, "frontend/static_src/src"),
-]
 
+# Standard Settings
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_TZ = True
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Tailwind
+TAILWIND_APP_NAME = "frontend"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
 MEDIA_URL = "/media/"
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-# Cloudinary
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME") or os.environ.get("CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY") or os.environ.get("API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET") or os.environ.get("API_SECRET"),
-}
 
 # Celery
 CELERY_BROKER_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
@@ -171,15 +147,14 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = TIME_ZONE
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
-TAILWIND_APP_NAME = "frontend"
-
+# Login and Logout Redirects
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
 
-STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_placeholder")
-STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_placeholder")
-STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "whsec_placeholder")
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
 
 CART_SESSION_ID = "cart"
 
