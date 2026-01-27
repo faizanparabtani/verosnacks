@@ -2,8 +2,9 @@
 FROM node:20-slim AS frontend-builder
 WORKDIR /app
 
-# Copy the source
+# Copy the source and templates (needed for Tailwind class scanning)
 COPY frontend/static_src ./frontend/static_src
+COPY frontend/templates ./frontend/templates
 
 # Create the output directory structure
 RUN mkdir -p frontend/static/css/dist

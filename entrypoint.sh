@@ -8,4 +8,4 @@ uv run python manage.py migrate --noinput
 uv run python manage.py collectstatic --noinput
 
 # Start server
-exec uv run gunicorn -k uvicorn.workers.UvicornWorker --bind "0.0.0.0:8000" verosnacks.asgi:application
+exec uv run gunicorn verosnacks.wsgi:application --bind "0.0.0.0:8000" 
