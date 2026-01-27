@@ -20,8 +20,8 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "cloudinary_storage",
     "django.contrib.staticfiles",
+    "cloudinary_storage",
     "cloudinary",
     "app",
     "tailwind",
@@ -135,10 +135,6 @@ CLOUDINARY_STORAGE = {
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/static"),
-    os.path.join(BASE_DIR, "frontend/static_src/src"),
-]
 
 
 # Standard Settings
