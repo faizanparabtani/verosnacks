@@ -2,9 +2,9 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: verosnacks
-      POSTGRES_USER: vero_user
-      POSTGRES_PASSWORD: vero_password
+      POSTGRES_DB: ${POSTGRES_DB:-verosnacks}
+      POSTGRES_USER: ${POSTGRES_USER:-vero_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -22,9 +22,9 @@ services:
       - "8000:8000"
     environment:
       - DEBUG=True
-      - SECRET_KEY=dev_key_only
+      - SECRET_KEY=${SECRET_KEY:?SECRET_KEY is required}
       - REDIS_URL=redis://redis:6379/0
-      - DATABASE_URL=postgres://vero_user:vero_password@db:5432/verosnacks
+      - DATABASE_URL=postgres://${POSTGRES_USER:-vero_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-verosnacks}
       - UV_PROJECT_ENVIRONMENT=/venv
       - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
       - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}

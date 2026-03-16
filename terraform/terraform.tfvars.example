@@ -1,0 +1,5 @@
+aws_region       = "ca-central-1"
+project_name     = "myapp"
+environment      = "production"
+domain_name      = "example.com"
+django_image_uri = "123456789012.dkr.ecr.ca-central-1.amazonaws.com/myapp:latest"
