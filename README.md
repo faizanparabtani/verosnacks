@@ -12,6 +12,9 @@ Official site for Vero - A Django-based e-commerce platform for snacks.
 - **Containerized:** Full Docker support for development and production.
 - **High Performance:** Uses uv for blazing fast Python dependency management.
 
+## System Architecture
+![A picture of a cat](https://res.cloudinary.com/dklhalalp/image/upload/v1773640398/VeroSnacks.drawio_kftj7f.png)
+
 ## Tech Stack
 
 - **Backend:** Python 3.13, Django 6.0
