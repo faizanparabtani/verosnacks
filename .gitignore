@@ -171,6 +171,9 @@ cypress/screenshots/
 # Local development
 .docusaurus/
 
+### Claude Code ###
+.claude/
+
 ### Terraform ###
 # Local state files (use remote state like S3)
 *.tfstate

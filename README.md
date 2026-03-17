@@ -10,6 +10,7 @@ Official site for Vero - A Django-based e-commerce platform for snacks.
 - **Modern Frontend:** Styled with Tailwind CSS v4 and DaisyUI.
 - **Background Tasks:** Asynchronous processing using Celery and Redis.
 - **Containerized:** Full Docker support for development and production.
+- **Production-Ready Cloud Infrastructure:** Terraform-provisioned AWS stack (ECS Fargate, RDS, ElastiCache, CloudFront CDN, ALB, S3, SQS, Secrets Manager).
 - **High Performance:** Uses uv for blazing fast Python dependency management.
 
 ## System Architecture
@@ -23,7 +24,8 @@ Official site for Vero - A Django-based e-commerce platform for snacks.
 - **Cache & Broker:** Redis
 - **Task Queue:** Celery
 - **Package Manager:** uv (Python), npm (Frontend)
-- **Infrastructure:** Docker, Docker Compose
+- **Containers:** Docker, Docker Compose
+- **Cloud Infrastructure:** AWS (ECS Fargate, RDS PostgreSQL, ElastiCache Redis, ALB, CloudFront, S3, Secrets Manager, SQS) — provisioned via Terraform
 
 ## Prerequisites
 
@@ -77,7 +79,7 @@ Official site for Vero - A Django-based e-commerce platform for snacks.
 
 5.  **Start the Celery Worker (in a separate terminal):**
     ```bash
-    uv run celery -a verosnacks worker -l info
+    uv run celery -A verosnacks worker -l info
     ```
 
 ## Environment Variables
