@@ -1,3 +1,9 @@
+[tool.ruff.lint.per-file-ignores]
+# views/__init__.py is a re-export aggregator — F401 false positives are expected
+"app/views/__init__.py" = ["F401"]
+# deployment_settings.py intentionally uses wildcard import to inherit base settings
+"verosnacks/deployment_settings.py" = ["F401", "F403"]
+
 [project]
 name = "verosnacks"
 version = "0.1.0"
