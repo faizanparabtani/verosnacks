@@ -21,8 +21,9 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DEBUG=True
+      - DEBUG=${DEBUG:-True}
       - SECRET_KEY=${SECRET_KEY:?SECRET_KEY is required}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1}
       - REDIS_URL=redis://redis:6379/0
       - DATABASE_URL=postgres://${POSTGRES_USER:-vero_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-verosnacks}
       - UV_PROJECT_ENVIRONMENT=/venv
@@ -35,7 +36,7 @@ services:
 
   worker:
     build: .
-    command: uv run celery -a verosnacks worker -l info
+    command: uv run celery -A verosnacks worker -l info
     volumes:
       - .:/code
     environment:

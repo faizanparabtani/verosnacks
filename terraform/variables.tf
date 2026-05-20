@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "project_name" {
   description = "Short project name used in resource naming"
   type        = string
-  default     = "django-app"
+  default     = "verosnacks"
 }
 
 variable "environment" {

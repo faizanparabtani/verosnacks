@@ -1,149 +1,65 @@
-# Verosnacks
+# Vero Snacks
 
-Official site for Vero - A Django-based e-commerce platform for snacks.
+An E-Commerce platform for healthy snacks startup. with async task processing, containerized development, and AWS infrastructure provisioned via Terraform.
 
-## Features
+[![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://python.org)
+[![Django](https://img.shields.io/badge/django-6.0-green.svg)](https://djangoproject.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Docker](https://img.shields.io/badge/docker-compose-blue.svg)](compose.yaml)
 
-- **E-commerce Functionality:** Product browsing, cart management, and checkout.
-- **Payment Processing:** Integrated with Stripe.
-- **Media Management:** Cloudinary integration for product images.
-- **Modern Frontend:** Styled with Tailwind CSS v4 and DaisyUI.
-- **Background Tasks:** Asynchronous processing using Celery and Redis.
-- **Containerized:** Full Docker support for development and production.
-- **Production-Ready Cloud Infrastructure:** Terraform-provisioned AWS stack (ECS Fargate, RDS, ElastiCache, CloudFront CDN, ALB, S3, SQS, Secrets Manager).
-- **High Performance:** Uses uv for blazing fast Python dependency management.
+## Architecture
 
-## System Architecture
-![A picture of a cat](https://res.cloudinary.com/dklhalalp/image/upload/v1773640398/VeroSnacks.drawio_kftj7f.png)
+![System architecture: Django web service and Celery workers running on AWS ECS Fargate, backed by RDS PostgreSQL and ElastiCache Redis, with CloudFront CDN, ALB, S3 for static/media, and SQS for async messaging](https://res.cloudinary.com/dklhalalp/image/upload/v1773640398/VeroSnacks.drawio_kftj7f.png)
 
 ## Tech Stack
 
-- **Backend:** Python 3.13, Django 6.0
-- **Frontend:** HTML5, Tailwind CSS, DaisyUI, JavaScript
-- **Database:** PostgreSQL
-- **Cache & Broker:** Redis
-- **Task Queue:** Celery
-- **Package Manager:** uv (Python), npm (Frontend)
-- **Containers:** Docker, Docker Compose
-- **Cloud Infrastructure:** AWS (ECS Fargate, RDS PostgreSQL, ElastiCache Redis, ALB, CloudFront, S3, Secrets Manager, SQS) — provisioned via Terraform
+| Layer | Technology |
+|---|---|
+| Backend | Python 3.13, Django 6.0 |
+| Frontend | HTML5, Tailwind CSS v4, DaisyUI |
+| Database | PostgreSQL 16 |
+| Cache & Broker | Redis 7 |
+| Task Queue | Celery 5 |
+| Payments | Stripe |
+| Media | Cloudinary |
+| Package Manager | uv |
+| Containers | Docker, Docker Compose |
+| Infrastructure Provisioned | AWS via Terraform (ECS, RDS, ElastiCache, ALB, CloudFront, S3, Secrets Manager) |
+| Current Infrastructure | Railway |
 
-## Prerequisites
+---
 
-- Docker and Docker Compose (Recommended)
-- uv (For local Python development)
-- Node.js 20+ (For local frontend development)
+## Quickstart
 
-## Installation and Setup
+Copy `.env.example` to `.env` — only `SECRET_KEY` and `POSTGRES_PASSWORD` are required to run locally.
 
-### Option 1: Docker (Recommended)
-
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd verosnacks
-    ```
-
-2.  **Set up environment variables:**
-    Create a .env file in the root directory (see [Environment Variables](#environment-variables) below).
-
-3.  **Build and run the containers:**
-    ```bash
-    docker compose up --build
-    ```
-    The application will be available at http://localhost:8000.
-
-### Option 2: Local Development
-
-1.  **Install Python dependencies:**
-    ```bash
-    uv sync
-    ```
-
-2.  **Install Frontend dependencies and build CSS:**
-    ```bash
-    cd frontend/static_src
-    npm install
-    # Watch mode for development
-    npm run dev
-    ```
-
-3.  **Run Migrations:**
-    ```bash
-    uv run python manage.py migrate
-    ```
-
-4.  **Start the Development Server:**
-    ```bash
-    uv run python manage.py runserver
-    ```
-
-5.  **Start the Celery Worker (in a separate terminal):**
-    ```bash
-    uv run celery -A verosnacks worker -l info
-    ```
-
-## Environment Variables
-
-Create a .env file in the root directory with the following variables:
-
-```ini
-# Django
-DEBUG=True
-SECRET_KEY=your-secret-key
-ALLOWED_HOSTS=localhost,127.0.0.1
-
-# Database
-DATABASE_URL=postgres://vero_user:vero_password@db:5432/verosnacks
-
-# Redis (Cache & Celery)
-REDIS_URL=redis://redis:6379/0
-
-# Cloudinary (Media)
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-
-# Stripe (Payments)
-STRIPE_PUBLISHABLE_KEY=pk_test_...
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
+```bash
+git clone <repository-url>
+cd verosnacks
+cp .env.example .env
+docker compose up --build
 ```
 
-## Frontend Development
+App available at `http://localhost:8000`. Migrations run automatically on startup.
 
-The frontend uses Tailwind CSS v4. Styles are processed from frontend/static_src/src/styles.css and output to frontend/static/css/dist/styles.css.
+---
 
-- **Watch mode:** npm run dev (in frontend/static_src) - Rebuilds CSS on change.
-- **Production build:** npm run build - Minifies CSS for production.
+## Infrastructure
 
-## Docker Compose Services
+Production infrastructure is defined in [`terraform/`](terraform/) and targets AWS. See [`terraform.tfvars.example`](terraform/terraform.tfvars.example) for required inputs.
 
-- **web:** Django development server.
-- **worker:** Celery worker for background tasks.
-- **db:** PostgreSQL 16 database.
-- **redis:** Redis 7 for caching and message brokerage.
+---
 
-## Management Commands
+## Troubleshooting
 
-- **Create Superuser:**
-  ```bash
-  # Docker
-  docker compose exec web uv run python manage.py createsuperuser
+**Exits with a variable error** — `SECRET_KEY` and `POSTGRES_PASSWORD` must be set in `.env`.
 
-  # Local
-  uv run python manage.py createsuperuser
-  ```
+**400 Bad Request / DisallowedHost** — add your hostname to `ALLOWED_HOSTS` in `.env`.
 
-- **Make Migrations:**
-  ```bash
-  uv run python manage.py makemigrations
-  ```
+**Database refused on first boot** — PostgreSQL may not be ready yet; re-run `docker compose up`.
 
-- **Run Tests:**
-  ```bash
-  uv run python manage.py test
-  ```
+---
 
 ## License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+[MIT](LICENSE)

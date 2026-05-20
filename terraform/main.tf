@@ -76,7 +76,6 @@ module "alb" {
   domain_name       = var.domain_name
 }
 
-# cloudfront must run before s3 so its distribution ARN can be passed to the s3 bucket policy.
 module "cloudfront" {
   source       = "./modules/cloudfront"
   project_name = var.project_name
@@ -85,7 +84,6 @@ module "cloudfront" {
   domain_name               = var.domain_name
   alb_dns_name              = module.alb.alb_dns_name
   s3_bucket_regional_domain = module.s3.bucket_regional_domain_name
-  s3_bucket_arn             = module.s3.bucket_arn
 
   providers = {
     aws           = aws
@@ -98,8 +96,34 @@ module "s3" {
   project_name = var.project_name
   environment  = var.environment
 
-  domain_name                 = var.domain_name
-  cloudfront_distribution_arn = module.cloudfront.cloudfront_distribution_arn
+  domain_name = var.domain_name
+}
+
+# Bucket policy is a standalone resource so neither module depends on the other.
+# S3 module creates the bucket; CloudFront module creates the distribution;
+# this resource wires them together after both exist.
+resource "aws_s3_bucket_policy" "cloudfront_oac" {
+  bucket = module.s3.bucket_name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "AllowCloudFrontOACReadOnly"
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudfront.amazonaws.com"
+        }
+        Action   = "s3:GetObject"
+        Resource = "${module.s3.bucket_arn}/*"
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = module.cloudfront.cloudfront_distribution_arn
+          }
+        }
+      }
+    ]
+  })
 }
 
 module "ecs" {

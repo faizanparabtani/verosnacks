@@ -12,8 +12,3 @@ variable "domain_name" {
   description = "Primary domain name (used in CORS allowed origins)"
   type        = string
 }
-
-variable "cloudfront_distribution_arn" {
-  description = "CloudFront distribution ARN — used in bucket policy to allow OAC access"
-  type        = string
-}

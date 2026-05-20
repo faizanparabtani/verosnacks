@@ -82,29 +82,3 @@ resource "aws_s3_bucket_lifecycle_configuration" "static" {
   }
 }
 
-# Bucket policy allowing CloudFront OAC read access.
-# The CloudFront distribution ARN is passed in from the cloudfront module after
-# the distribution is created — avoids circular dependency.
-resource "aws_s3_bucket_policy" "cloudfront_oac" {
-  bucket = aws_s3_bucket.static.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid    = "AllowCloudFrontOACReadOnly"
-        Effect = "Allow"
-        Principal = {
-          Service = "cloudfront.amazonaws.com"
-        }
-        Action   = "s3:GetObject"
-        Resource = "${aws_s3_bucket.static.arn}/*"
-        Condition = {
-          StringEquals = {
-            "AWS:SourceArn" = var.cloudfront_distribution_arn
-          }
-        }
-      }
-    ]
-  })
-}
