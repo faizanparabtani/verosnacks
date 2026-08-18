@@ -1,7 +1,9 @@
 import os
-from .settings import *
+
 import cloudinary
 import dj_database_url
+
+from .settings import *
 
 DEBUG = False
 SECRET_KEY = os.environ.get("SECRET_KEY")
