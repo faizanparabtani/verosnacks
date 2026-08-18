@@ -14,7 +14,9 @@ services:
       - 6379
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Containerfile
     command: uv run python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
@@ -35,7 +37,9 @@ services:
       - redis
 
   worker:
-    build: .
+    build:
+      context: .
+      dockerfile: Containerfile
     command: uv run celery -A verosnacks worker -l info
     volumes:
       - .:/code
