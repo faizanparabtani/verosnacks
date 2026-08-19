@@ -75,7 +75,7 @@ WSGI_APPLICATION = "verosnacks.wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_PUBLIC_URL", "sqlite:///db.sqlite3"),
+        default=os.environ.get("DATABASE_PUBLIC_URL"),
         conn_max_age=600,
         conn_health_checks=True,
     )
@@ -127,6 +127,7 @@ CLOUDINARY_STORAGE = {
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "assets"]
 
 
 # Standard Settings
