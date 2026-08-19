@@ -23,6 +23,7 @@ dependencies = [
     "django-prometheus>=2.4.0",
     "django-storages>=1.14.6",
     "django-tailwind>=4.4.1",
+    "django-tailwind-cli>=4.7.0",
     "dotenv>=0.9.9",
     "gunicorn>=23.0.0",
     "honcho>=2.0.0",
