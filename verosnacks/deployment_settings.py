@@ -71,3 +71,8 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
+
+# django_tailwind_cli production settings
+TAILWIND_CLI_VERSION = "4.1.3"  # Optional: pin version for reproducibility
+TAILWIND_CLI_AUTOMATIC_DOWNLOAD = False  # Disable runtime downloads in container
+TAILWIND_CLI_PATH = "/usr/local/bin/tailwindcss"
