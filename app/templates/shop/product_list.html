@@ -1,8 +1,8 @@
-{% extends "frontend/base.html" %}
+{% extends "app/base.html" %}
 {% block title %}Shop - Vero{% endblock %}
 
 {% block content %}
-<div class="bg-gray-50 py-8 md:py-12">
+<div class="bg-linear-to-br from-amber-50 via-orange-50 to-amber-100 py-8 md:py-12">
     <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Sidebar -->
@@ -31,8 +31,8 @@
                             <!-- Image Container -->
                             <div class="relative aspect-square overflow-hidden rounded-[1.5rem] bg-beige/10 mb-6 flex-shrink-0">
                                 <a href="{% url 'product_detail' product.id product.slug %}" class="block w-full h-full">
-                                    <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/600x600?text={{ product.name }}{% endif %}" 
-                                         alt="{{ product.name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                    <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://placehold.co/600x600?text={{ product.name }}{% endif %}" 
+                                         alt="{{ product.name }}" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105">
                                 </a>
                                 <div class="absolute bottom-4 left-4 bg-gray-900/90 backdrop-blur-sm text-gold font-black px-4 py-2 rounded-full text-sm">
                                     ${{ product.price }}

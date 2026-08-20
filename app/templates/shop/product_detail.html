@@ -1,4 +1,4 @@
-{% extends "frontend/base.html" %}
+{% extends "app/base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}{{ product.name }} - Vero{% endblock %}
 
@@ -11,9 +11,9 @@
             <!-- Left: Image Gallery -->
             <div class="space-y-6 w-full max-w-xl mx-auto lg:mx-0">
                 <div class="aspect-square w-full bg-beige/10 rounded-[2.5rem] overflow-hidden border border-beige/40 shadow-inner group">
-                    <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/1000x1000?text={{ product.name }}{% endif %}" 
+                    <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://placehold.co/1000x1000?text={{ product.name }}{% endif %}" 
                          alt="{{ product.name }}" 
-                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                         class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105">
                 </div>
                 <!-- Mini Gallery Placeholder -->
                 <div class="grid grid-cols-4 gap-4">

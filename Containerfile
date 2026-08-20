@@ -1,18 +1,3 @@
-# Stage 1: Build Frontend
-FROM node:20-slim AS frontend-builder
-WORKDIR /app
-
-# Copy the source and templates (needed for Tailwind class scanning)
-COPY frontend/static_src ./frontend/static_src
-COPY frontend/templates ./frontend/templates
-
-# Create the output directory structure
-RUN mkdir -p frontend/static/css/dist
-
-WORKDIR /app/frontend/static_src
-RUN npm install
-RUN npm run build
-
 # Stage 2: Python Runtime
 FROM python:3.13-slim
 
@@ -31,6 +16,10 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Download and install tailwindcss CLI binary
+RUN curl -sL https://github.com/tailwindlabs/tailwindcss/releases/download/v4.1.3/tailwindcss-linux-x64 -o /usr/local/bin/tailwindcss && \
+    chmod +x /usr/local/bin/tailwindcss
+
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
@@ -44,15 +33,14 @@ COPY . .
 # Install the project itself
 RUN uv sync --frozen --no-dev
 
-# Copy built frontend assets from builder
-COPY --from=frontend-builder /app/frontend/static/css/dist/styles.css /code/frontend/static/css/dist/styles.css
+RUN useradd -m -u 1000 django && \
+    chown -R django:django /code
+USER django
 
 # Expose port
 EXPOSE 8000
 
 # Copy entrypoint script and make it executable
-COPY entrypoint.sh /code/entrypoint.sh
-RUN chmod +x /code/entrypoint.sh
-
+COPY --chmod=755 entrypoint.sh /code/entrypoint.sh
 # Run the entrypoint script
 CMD ["/code/entrypoint.sh"]

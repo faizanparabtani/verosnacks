@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import "tailwindcss";
-@plugin "daisyui";
 
 @theme {
   --color-beige: #EDE5CC;
-  --color-brown: #3D1700;
+  --color-brown: #362419;
   --color-gold: #D4942D;
+  --color-green: #D57b4e;
 
   --color-primary: var(--color-brown);
   --color-secondary: var(--color-gold);

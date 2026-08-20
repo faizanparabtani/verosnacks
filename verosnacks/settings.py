@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+
+import cloudinary
 import dj_database_url
 from dotenv import load_dotenv
 
@@ -9,8 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = True
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
@@ -20,20 +22,15 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "cloudinary_storage",
+    'cloudinary_storage',
     "django.contrib.staticfiles",
     "cloudinary",
     "app",
     "django_tailwind_cli",
-    "tailwind",
-    "frontend",
     "crispy_forms",
     "crispy_tailwind",
 ]
 
-
-if DEBUG:
-    INSTALLED_APPS += ["django_browser_reload"]
 
 MIDDLEWARE = [
     "django_prometheus.middleware.PrometheusBeforeMiddleware",
@@ -48,7 +45,9 @@ MIDDLEWARE = [
     "django_prometheus.middleware.PrometheusAfterMiddleware",
 ]
 
+
 if DEBUG:
+    INSTALLED_APPS += ["django_browser_reload"]
     MIDDLEWARE += [
         "django_browser_reload.middleware.BrowserReloadMiddleware",
     ]
@@ -58,7 +57,7 @@ ROOT_URLCONF = "verosnacks.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "frontend/templates")],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -97,33 +96,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-if DEBUG:
-    STORAGES = {
-        "default": {
-            "BACKEND": "django.core.files.storage.FileSystemStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-        },
-    }
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-else:
-    STORAGES = {
-        "default": {
-            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-        },
-    }
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
-
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
-}
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUD_NAME"),
+    api_key=os.environ.get("API_KEY"),
+    api_secret=os.environ.get("API_SECRET"),
+    secure=True,
+)
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -139,11 +118,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # Tailwind
-TAILWIND_APP_NAME = "frontend"
-CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
-CRISPY_TEMPLATE_PACK = "tailwind"
+TAILWIND_CLI_SRC_CSS = os.path.join(BASE_DIR, "app/static/css/main.css")
+# TAILWIND_APP_NAME = "frontend"
+# CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+# CRISPY_TEMPLATE_PACK = "tailwind"
 MEDIA_URL = "/media/"
-
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 # Celery
 CELERY_BROKER_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")

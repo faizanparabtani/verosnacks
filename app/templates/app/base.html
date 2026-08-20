@@ -1,4 +1,4 @@
-{% load static tailwind_tags %}
+{% load tailwind_cli %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Vero{% endblock %}</title>
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dklhalalp/image/upload/c_fill,h_32,w_32,g_center/v1766333827/VeroLogo_1_v0n1yn.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-    {% tailwind_preload_css %}
     {% tailwind_css %}
     {% block head %}{% endblock %}
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
@@ -146,7 +146,7 @@
     {% endblock %}
 </main>
 
-<footer class="bg-gray-900 py-12">
+<footer class="bg-brown py-12">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
             <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766333827/VeroLogo_1_v0n1yn.png" alt="Vero Logo" class="h-18">

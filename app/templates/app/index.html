@@ -1,22 +1,22 @@
-{% extends "frontend/base.html" %}
+{% extends "app/base.html" %}
 {% load static %}
 {% block title %}Vero Snacks{% endblock %}
 {% block content %}
 <section class="relative overflow-hidden bg-linear-to-br from-amber-50 via-orange-50 to-amber-100">
   <div class="relative w-full">
-    <div class="h-10 offer-swiper swiper">
+    <div class="h-10 offer-swiper swiper bg-brown">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <p class="text-lg font-black bg-gray-900 text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">Free shipping over $50</p>
+                <p class="text-lg font-black text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">Free shipping over $50</p>
             </div>
             <div class="swiper-slide">
-                <p class="text-lg font-black bg-gray-900 text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">New holiday flavors now available!!</p>
+                <p class="text-lg font-black text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">New holiday flavors now available!!</p>
             </div>
             <div class="swiper-slide">
-                <p class="text-lg font-black bg-gray-900 text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">10% off your first order</p>
+                <p class="text-lg font-black text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">10% off your first order</p>
             </div>
             <div class="swiper-slide">
-                <p class="text-lg font-black bg-gray-900 text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">Only Real Ingredients — No Compromises</p>
+                <p class="text-lg font-black text-gold text-center px-2 h-full flex items-center justify-center tracking-[0.1em] w-full">Only Real Ingredients — No Compromises</p>
             </div>
         </div>
     </div>
@@ -30,31 +30,31 @@
       
       <div class="flex flex-wrap justify-center lg:justify-start gap-4 md:gap-6 mb-8 lg:mb-0">
         <!-- Bars -->
-        <div class="flex flex-col items-center gap-3 group cursor-pointer">
+        <a href="{% url 'product_list_by_category' category_slug='bars' %}" class="flex flex-col items-center gap-3 group cursor-pointer">
           <div class="w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden transition-all duration-300">
-            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766283445/K_y1iujt.png" 
+            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1787149108/BerryBlast_fovobd.png" 
                  class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" alt="Bars">
           </div>
           <p class="font-black text-lg md:text-xl text-brown group-hover:text-gold transition-colors">Bars</p>
-        </div>
+        </a>
 
         <!-- Truffles -->
-        <div class="flex flex-col items-center gap-3 group cursor-pointer">
+        <a href="{% url 'product_list_by_category' category_slug='truffle' %}" class="flex flex-col items-center gap-3 group cursor-pointer">
           <div class="w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden transition-all duration-300">
-            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766341170/truffle_m7sy1k.webp" 
+            <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1787149114/DarkChocolate_o6ikfg.png" 
                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Truffles">
           </div>
           <p class="font-black text-lg md:text-xl text-brown group-hover:text-gold transition-colors">Truffles</p>
-        </div>
+        </a>
 
         <!-- Chips -->
-        <div class="flex flex-col items-center gap-3 group cursor-pointer">
+        <a href="{% url 'product_list_by_category' category_slug='chips' %}" class="flex flex-col items-center gap-3 group cursor-pointer">
           <div class="w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden transition-all duration-300">
             <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1787149112/TexMex_dse5da.png" 
                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Chips">
           </div>
           <p class="font-black text-lg md:text-xl text-brown group-hover:text-gold transition-colors">Chips</p>
-        </div>
+        </a>
       </div>
     </div>
     <!-- Floating elements (Tighter grouping) -->
@@ -68,7 +68,7 @@
 
       <!-- Bars Floating (Tighter to bottom left of chips) -->
       <div class="absolute bottom-12 left-4 md:left-16 w-36 md:w-52 z-30 animate-slow-bounce">
-        <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1766283445/K_y1iujt.png" 
+        <img src="https://res.cloudinary.com/dklhalalp/image/upload/v1787149108/BerryBlast_fovobd.png" 
              class="w-full h-auto drop-shadow-2xl rounded-3xl object-cover -rotate-12"
              alt="Floating Bars">
       </div>
@@ -86,16 +86,62 @@
   </div>
 </section>
 
-<section class="bg-gray-900 py-12 md:py-16">
-  <div class="max-w-6xl mx-auto px-6 text-center">
-    <h2 class="text-3xl text-gold md:text-5xl font-extrabold mb-4">We choose transparency</h2>
-    <p class="text-white text-lg max-w-2xl mx-auto mb-8">
-      Every ingredient we use is listed clearly, openly, and without disguises.  
-      No confusing labels. No artificial gimmicks. Just real food.
-    </p>
-    <img src="{% static 'images/ingredients-board.png' %}"
-         class="w-full max-w-4xl mx-auto rounded-xl shadow-lg"
-         alt="Ingredient board">
+<section class="bg-[url(https://res.cloudinary.com/dklhalalp/image/upload/v1787192242/bg_m1fsfz.png)] bg-no-repeat bg-cover py-12 md:py-16">
+  <div class="max-w-6xl mx-auto px-6 text-left">
+    <div class="flex flex-col md:flex-row items-center h-full bg-linear-to-br from-amber-50 via-orange-50 to-amber-100 rounded-4xl p-5 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(61,23,0,0.1)] border border-beige/60 relative">
+      <div class="w-full md:w-auto justify-center h-full text-center md:text-left">
+        <h2 class="text-3xl text-gold md:text-5xl font-extrabold mb-4">The Vero Difference</h2>
+        <div class="w-100 h-2 bg-green mb-4"></div>
+        <p class="text-gray-900 text-lg max-w-2xl mx-auto mb-8 justify-start">
+          Millets are one of the oldest cultivated crops gluten-free, high-protein, low-GI, and dramatically 
+          more sustainable than wheat or rice. We bring this to your daily snack.
+        </p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 w-full md:w-auto mt-6 md:mt-0">
+        <div class="bg-green backdrop-blur-sm rounded-3xl p-6 border border-beige/60 transition-all duration-500 hover:shadow-[0_10px_30px_rgba(61,23,0,0.08)] hover:-translate-y-1 text-center flex flex-col items-center justify-center gap-3">
+          <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
+            <i class="fas fa-heart-pulse text-brown text-xl"></i>
+          </div>
+          <h3 class="font-black text-white text-sm leading-tight">Low Glycemic Index</h3>
+          <p class="text-white text-xs font-medium">Blood Sugar Friendly</p>
+        </div>
+        <div class="bg-green backdrop-blur-sm rounded-3xl p-6 border border-beige/60 transition-all duration-500 hover:shadow-[0_10px_30px_rgba(61,23,0,0.08)] hover:-translate-y-1 text-center flex flex-col items-center justify-center gap-3">
+          <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
+            <i class="fas fa-leaf text-brown text-xl"></i>
+          </div>
+          <h3 class="font-black text-white text-sm leading-tight">100% Gluten Free</h3>
+          <p class="text-white text-xs font-medium">Non-GMO Certified</p>
+        </div>
+        <div class="bg-green backdrop-blur-sm rounded-3xl p-6 border border-beige/60 transition-all duration-500 hover:shadow-[0_10px_30px_rgba(61,23,0,0.08)] hover:-translate-y-1 text-center flex flex-col items-center justify-center gap-3">
+          <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
+            <i class="fas fa-dumbbell text-brown text-xl"></i>
+          </div>
+          <h3 class="font-black text-white text-sm leading-tight">14g+ Protein</h3>
+          <p class="text-white text-xs font-medium">Per 60-100g Serving</p>
+        </div>
+        <div class="bg-green backdrop-blur-sm rounded-3xl p-6 border border-beige/60 transition-all duration-500 hover:shadow-[0_10px_30px_rgba(61,23,0,0.08)] hover:-translate-y-1 text-center flex flex-col items-center justify-center gap-3">
+          <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
+            <i class="fa-solid fa-hand-holding-heart text-brown text-xl"></i>
+          </div>
+          <h3 class="font-black text-white text-sm leading-tight">6g+ Fiber</h3>
+          <p class="text-white text-xs font-medium">Dietary Fiber</p>
+        </div>
+        <div class="bg-green backdrop-blur-sm rounded-3xl p-6 border border-beige/60 transition-all duration-500 hover:shadow-[0_10px_30px_rgba(61,23,0,0.08)] hover:-translate-y-1 text-center flex flex-col items-center justify-center gap-3">
+          <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
+            <i class="fas fa-capsules text-brown text-xl"></i>
+          </div>
+          <h3 class="font-black text-white text-sm leading-tight">Rich in Minerals</h3>
+          <p class="text-white text-xs font-medium">Iron, Magnesium & Vitamin B</p>
+        </div>
+        <div class="bg-green backdrop-blur-sm rounded-3xl p-6 border border-beige/60 transition-all duration-500 hover:shadow-[0_10px_30px_rgba(61,23,0,0.08)] hover:-translate-y-1 text-center flex flex-col items-center justify-center gap-3">
+          <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
+            <i class="fas fa-droplet text-brown text-xl"></i>
+          </div>
+          <h3 class="font-black text-white text-sm leading-tight">2.5x Less Water</h3>
+          <p class="text-white text-xs font-medium">Than Rice to Cultivate</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -117,8 +163,8 @@
         <!-- Image Container -->
         <div class="relative aspect-square overflow-hidden rounded-3xl bg-beige/10 mb-6 shrink-0">
           <a href="{% url 'product_detail' product.id product.slug %}" class="block w-full h-full">
-            <img src="{% if product.image %}{{ product.image.url }}{% else %}https://placehold.co/600x600?text={{ product.name }}{% endif %}" 
-                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+            <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://placehold.co/600x600?text={{ product.name }}{% endif %}" 
+                 class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" 
                  alt="{{ product.name }}">
           </a>
           <!-- Floating Badge -->
@@ -131,15 +177,15 @@
 
         <!-- Content Area -->
         <div class="flex flex-col grow px-1">
-          <div class="flex justify-between items-start mb-3">
+          <div class="flex justify-between items-start mb-2">
             <h3 class="text-2xl font-black text-gray-900 leading-tight group-hover:text-gold transition-colors duration-300">
                 {{ product.name }}
             </h3>
           </div>
           
-          <p class="text-brown text-base leading-relaxed mb-6 line-clamp-2 font-medium">
+          <!-- <p class="text-brown text-base leading-relaxed mb-6 line-clamp-2 font-medium">
             {{ product.description }}
-          </p>
+          </p> -->
 
           <!-- Bottom Action Area -->
           <div class="mt-auto pt-4 flex flex-col gap-4 border-t border-beige/30">
@@ -161,16 +207,15 @@
 </section>
 
 <!-- Testimonials Section -->
-<section class="bg-gray-900 py-16 overflow-hidden relative">
+<section class="bg-green py-16 overflow-hidden relative">
     <div class="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl -mr-48 -mt-48"></div>
     <div class="absolute bottom-0 left-0 w-96 h-96 bg-beige/5 rounded-full blur-3xl -ml-48 -mb-48"></div>
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-12">
             <h2 class="text-4xl md:text-5xl font-black text-beige mb-4">Loved by the Community</h2>
-            <p class="text-gold font-bold text-lg uppercase tracking-widest">Real feedback from real snackers</p>
+            <p class="text-white font-bold text-lg uppercase tracking-widest">Real feedback from real snackers</p>
         </div>
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {% for t in testimonials %}
             <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-10 rounded-[2.5rem] relative group hover:bg-white/10 transition-all duration-500">

@@ -14,9 +14,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def order_create(request):
-    cart = Cart(request)
-    if not cart:
-        return redirect("product_list")
+    messages.warning(request, "We're currently out of stock. Orders are temporarily unavailable.")
+    return redirect("cart_detail")
 
     if request.method == "POST":
         form = OrderCreateForm(request.POST)

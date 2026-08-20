@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Order, OrderItem, Profile, Review, Testimonial
+from .models import Category, Product, Order, OrderItem, Profile, Review, Testimonial, ContactInquiry
 
 
 @admin.register(Category)
@@ -56,3 +56,10 @@ class TestimonialAdmin(admin.ModelAdmin):
     list_display = ["name", "role", "active", "created"]
 
     list_filter = ["active", "created"]
+
+
+@admin.register(ContactInquiry)
+class ContactInquiryAdmin(admin.ModelAdmin):
+    list_display = ["name", "email", "created", "read"]
+    list_filter = ["read", "created"]
+    list_editable = ["read"]

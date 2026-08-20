@@ -1,12 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.db import models
-from app.models import Category, Product, Testimonial, Order
+from app.models import Category, Product, Testimonial, Order, ContactInquiry
 from app.forms import CartAddProductForm
 
 def index(request):
     products = Product.objects.filter(available=True)[:4]
     testimonials = Testimonial.objects.filter(active=True)[:3]
-    return render(request, 'frontend/index.html', {
+    return render(request, 'app/index.html', {
         'products': products,
         'testimonials': testimonials
     })
@@ -60,7 +61,17 @@ def search(request):
     })
 
 def our_story(request):
-    return render(request, 'frontend/our_story.html')
+    return render(request, 'app/our_story.html')
 
 def contact(request):
-    return render(request, 'frontend/contact.html')
+    if request.method == 'POST':
+        name = request.POST.get('name', '').strip()
+        email = request.POST.get('email', '').strip()
+        message = request.POST.get('message', '').strip()
+        if name and email and message:
+            ContactInquiry.objects.create(name=name, email=email, message=message)
+            messages.success(request, 'Your message has been sent! We\'ll get back to you soon.')
+            return redirect('contact')
+        else:
+            messages.error(request, 'Please fill in all fields.')
+    return render(request, 'app/contact.html')

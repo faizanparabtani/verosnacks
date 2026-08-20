@@ -1,4 +1,4 @@
-{% extends "frontend/base.html" %}
+{% extends "app/base.html" %}
 
 {% block title %}Contact Us - Vero{% endblock %}
 
@@ -54,7 +54,8 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-gray-900 text-lg">Call Us</h3>
-                            <p class="text-brown/70">+1 (905) 555-0123</p>
+                            <p class="text-brown/70">+1 (437) 937-4815</p>
+                            <p class="text-brown/70">+1 (647) 897-2614</p>
                         </div>
                     </div>
                 </div>
@@ -62,7 +63,16 @@
 
             <!-- Contact Form -->
             <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-beige">
-                <form action="#" method="POST" class="space-y-6">
+                {% if messages %}
+                <div class="mb-6 space-y-3">
+                    {% for message in messages %}
+                    <div class="p-4 rounded-xl text-sm font-bold {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% else %}bg-beige text-brown{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <form action="{% url 'contact' %}" method="POST" class="space-y-6">
                     {% csrf_token %}
                     <div>
                         <label for="name" class="block text-sm font-bold text-brown mb-2 uppercase tracking-wide">Name</label>

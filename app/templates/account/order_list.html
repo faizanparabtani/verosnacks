@@ -1,4 +1,4 @@
-{% extends "frontend/base.html" %}
+{% extends "app/base.html" %}
 {% block title %}My Orders - Vero{% endblock %}
 
 {% block content %}
@@ -34,7 +34,7 @@
                                     <div class="flex -space-x-3">
                                         {% for item in order.items.all|slice:":3" %}
                                         <div class="w-10 h-10 rounded-full border-2 border-white bg-beige/10 overflow-hidden shadow-sm">
-                                            <img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}https://placehold.co/100x100{% endif %}" alt="{{ item.product.name }}" class="w-full h-full object-cover">
+                                            <img src="{% if item.product.product_image %}{{ item.product.product_image.url }}{% else %}https://placehold.co/100x100{% endif %}" alt="{{ item.product.name }}" class="w-full h-full object-cover">
                                         </div>
                                         {% endfor %}
                                         {% if order.items.count > 3 %}
